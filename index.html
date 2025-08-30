@@ -1,180 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>McClelland Trophy Live Ladder</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McClelland Trophy Ladder 2025</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background: #eee;
-        }
+        body { font-family: Arial, sans-serif; background: #f9f9f9; color: #222; margin: 0; padding: 20px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background: #eee; }
+        .note { text-align: center; color: #666; margin-bottom: 20px; }
     </style>
 </head>
-
 <body>
-    <h1>McClelland Trophy Live Ladder</h1>
+    <h1>McClelland Trophy Ladder 2025</h1>
+    <div class="note">
+        <p>Combined AFL & AFLW club rankings. <br>
+        <small>Ranking: 1st = 18 points, 2nd = 17, ..., 18th = 1 point. Highest combined wins.</small></p>
+    </div>
     <table id="ladder">
         <thead>
             <tr>
-                <th>Position</th>
                 <th>Club</th>
-                <th>Played</th>
-                <th>Points</th>
-                <th>%</th>
-                <th>Won</th>
-                <th>Lost</th>
-                <th>Drawn</th>
-                <th>PF</th>
-                <th>PA</th>
+                <th>AFL Rank</th>
+                <th>AFL Points</th>
+                <th>AFLW Rank</th>
+                <th>AFLW Points</th>
+                <th>Combined Score</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
-
     <script>
-        async function loadData() {
-            try {
-                const [aflwRes, aflRes] = await Promise.all([
-                    fetch('aflw.json'),
-                    fetch('afl.json')
-                ]);
+    async function loadData() {
+        const [aflRes, aflwRes] = await Promise.all([
+            fetch('afl.json'),
+            fetch('aflw.json')
+        ]);
+        const aflData = await aflRes.json();
+        const aflwData = await aflwRes.json();
 
-                const aflwData = await aflwRes.json();
-                const aflData = await aflRes.json();
-
-                // Mapping table to align AFLW team names with AFL / Squiggle names
-                const aflNameMap = {
-                    "Narrm": "Melbourne",
-                    "Kangaroos": "North Melbourne",
-                    "Kuwarna": "Adelaide",
-                    "Waalitj Marawar": "West Coast",
-                    "Yartapuulti": "Port Adelaide",
-                    "Walyalup": "Fremantle",
-                    "Euro-Yroke": "St Kilda",
-                    "Sydney Swans": "Sydney",
-                    "GWS GIANTS": "Greater Western Sydney",
-                    "Geelong Cats": "Geelong",
-                    "Gold Coast SUNS": "Gold Coast"
+        // Build AFL rank map: team name -> {rank, points}
+        const aflRankMap = {};
+        aflData
+            .sort((a, b) => b.points - a.points || b.percentage - a.percentage)
+            .forEach((team, idx) => {
+                aflRankMap[team.team] = {
+                    rank: idx + 1,
+                    points: 18 - idx // 1st = 18, 2nd = 17, ...
                 };
+            });
 
-                // Normalise AFLW data (array, not object)
-                const aflwTeams = aflwData.map(team => ({
-                    club: aflNameMap[team.team || team.club] || team.team || team.club,
-                    played: parseInt(team.played, 10),
-                    points: parseInt(team.points, 10),
-                    percentage: parseFloat(team.percentage),
-                    won: parseInt(team.wins ?? team.won, 10),
-                    lost: parseInt(team.losses ?? team.lost, 10),
-                    drawn: parseInt(team.draws ?? team.drawn, 10),
-                    pf: parseInt(team.pf, 10),
-                    pa: parseInt(team.pa, 10)
-                }));
+        // Build AFLW rank map: team name -> {rank, points}
+        const aflwRankMap = {};
+        aflwData
+            .sort((a, b) => b.points - a.points || b.percentage - a.percentage)
+            .forEach((team, idx) => {
+                aflwRankMap[team.team] = {
+                    rank: idx + 1,
+                    points: 18 - idx
+                };
+            });
 
-                // Normalise AFL data (array, not object)
-                const aflTeams = aflData.map(team => ({
-                    club: team.team || team.name,
-                    played: team.played,
-                    points: team.points ?? team.pts,
-                    percentage: team.percentage,
-                    won: team.wins,
-                    lost: team.lost ?? team.losses,
-                    drawn: team.drawn ?? team.draws,
-                    pf: team.pf ?? team.for,
-                    pa: team.pa ?? team.against
-                }));
+        // Get all unique clubs
+        const allClubs = new Set([
+            ...Object.keys(aflRankMap),
+            ...Object.keys(aflwRankMap)
+        ]);
 
-                // Merge AFL and AFLW results by club name
-                const combined = {};
+        // Build combined ladder
+        const combined = Array.from(allClubs).map(club => {
+            const afl = aflRankMap[club] || {rank: '-', points: 0};
+            const aflw = aflwRankMap[club] || {rank: '-', points: 0};
+            return {
+                club,
+                aflRank: afl.rank,
+                aflPoints: afl.points,
+                aflwRank: aflw.rank,
+                aflwPoints: aflw.points,
+                combined: afl.points + aflw.points
+            };
+        });
 
-                for (const t of aflwTeams) {
-                    if (!combined[t.club]) combined[t.club] = { ...t };
-                    else {
-                        combined[t.club].played += t.played;
-                        combined[t.club].points += t.points;
-                        combined[t.club].pf += t.pf;
-                        combined[t.club].pa += t.pa;
-                        combined[t.club].won += t.won;
-                        combined[t.club].lost += t.lost;
-                        combined[t.club].drawn += t.drawn;
-                    }
-                }
+        // Sort by combined score, then by AFL rank, then AFLW rank
+        combined.sort((a, b) => {
+            if (b.combined !== a.combined) return b.combined - a.combined;
+            if (a.aflRank !== '-' && b.aflRank !== '-') return a.aflRank - b.aflRank;
+            if (a.aflwRank !== '-' && b.aflwRank !== '-') return a.aflwRank - b.aflwRank;
+            return 0;
+        });
 
-                for (const t of aflTeams) {
-                    if (!combined[t.club]) combined[t.club] = { ...t };
-                    else {
-                        combined[t.club].played += t.played;
-                        combined[t.club].points += t.points;
-                        combined[t.club].pf += t.pf;
-                        combined[t.club].pa += t.pa;
-                        combined[t.club].won += t.won;
-                        combined[t.club].lost += t.lost;
-                        combined[t.club].drawn += t.drawn;
-                    }
-                }
-
-                // Recalculate percentages
-                Object.values(combined).forEach(t => {
-                    t.percentage = t.pa > 0 ? (t.pf / t.pa) * 100 : 0;
-                });
-
-                // Sort ladder by points, then percentage
-                const ladder = Object.values(combined).sort((a, b) => {
-                    if (b.points !== a.points) return b.points - a.points;
-                    return b.percentage - a.percentage;
-                });
-
-                const tbody = document.querySelector('#ladder tbody');
-                tbody.innerHTML = '';
-                ladder.forEach((team, idx) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-            <td>${idx + 1}</td>
-            <td>${team.club}</td>
-            <td>${team.played}</td>
-            <td>${team.points}</td>
-            <td>${team.percentage.toFixed(1)}</td>
-            <td>${team.won}</td>
-            <td>${team.lost}</td>
-            <td>${team.drawn}</td>
-            <td>${team.pf}</td>
-            <td>${team.pa}</td>
-          `;
-                    tbody.appendChild(row);
-                });
-            } catch (err) {
-                console.error('Error loading ladder:', err);
-                document.querySelector('#ladder tbody').innerHTML = `<tr><td colspan="10">Ladder unavailable</td></tr>`;
-            }
-        }
-
-        loadData();
+        // Render table
+        const tbody = document.querySelector('#ladder tbody');
+        tbody.innerHTML = '';
+        combined.forEach(row => {
+            tbody.innerHTML += `<tr>
+                <td>${row.club}</td>
+                <td>${row.aflRank}</td>
+                <td>${row.aflPoints}</td>
+                <td>${row.aflwRank}</td>
+                <td>${row.aflwPoints}</td>
+                <td><b>${row.combined}</b></td>
+            </tr>`;
+        });
+    }
+    loadData();
     </script>
 </body>
-
 </html>
