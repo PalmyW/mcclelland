@@ -33,6 +33,48 @@
         <tbody></tbody>
     </table>
     <script>
+    // Canonical team name map: all possible variants -> { key, display }
+    const TEAM_CANONICAL_MAP = {
+        // key: canonical key, display: display name
+        'adelaide': { key: 'adelaide', display: 'Adelaide Crows', variants: ['adelaide', 'adelaide crows'] },
+        'brisbane': { key: 'brisbane', display: 'Brisbane Lions', variants: ['brisbane', 'brisbane lions'] },
+        'carlton': { key: 'carlton', display: 'Carlton', variants: ['carlton'] },
+        'collingwood': { key: 'collingwood', display: 'Collingwood', variants: ['collingwood'] },
+        'essendon': { key: 'essendon', display: 'Essendon', variants: ['essendon'] },
+        'fremantle': { key: 'fremantle', display: 'Fremantle Dockers', variants: ['fremantle', 'fremantle dockers'] },
+        'geelong': { key: 'geelong', display: 'Geelong Cats', variants: ['geelong', 'geelong cats'] },
+        'gold coast': { key: 'gold coast', display: 'Gold Coast SUNS', variants: ['gold coast', 'gold coast suns'] },
+        'gws': { key: 'gws', display: 'GWS GIANTS', variants: ['gws', 'gws giants'] },
+        'hawthorn': { key: 'hawthorn', display: 'Hawthorn', variants: ['hawthorn'] },
+        'melbourne': { key: 'melbourne', display: 'Melbourne', variants: ['melbourne'] },
+        'north melbourne': { key: 'north melbourne', display: 'North Melbourne Kangaroos', variants: ['north melbourne', 'north melbourne kangaroos', 'kangaroos'] },
+        'port adelaide': { key: 'port adelaide', display: 'Port Adelaide', variants: ['port adelaide', 'port adelaide power', 'power'] },
+        'richmond': { key: 'richmond', display: 'Richmond', variants: ['richmond'] },
+        'st kilda': { key: 'st kilda', display: 'St Kilda', variants: ['st kilda', 'st.kilda', 'stkilda'] },
+        'sydney': { key: 'sydney', display: 'Sydney Swans', variants: ['sydney', 'sydney swans'] },
+        'west coast': { key: 'west coast', display: 'West Coast Eagles', variants: ['west coast', 'west coast eagles', 'eagles'] },
+        'western bulldogs': { key: 'western bulldogs', display: 'Western Bulldogs', variants: ['western bulldogs', 'bulldogs'] },
+    };
+
+    // Build a lookup: variant -> canonical key
+    const TEAM_VARIANT_TO_KEY = {};
+    Object.values(TEAM_CANONICAL_MAP).forEach(({ key, variants }) => {
+        variants.forEach(v => {
+            TEAM_VARIANT_TO_KEY[v.toLowerCase()] = key;
+        });
+    });
+
+    function normalizeName(name) {
+        if (!name) return '';
+        let n = name.toLowerCase().replace(/[^a-z]/g, ' ').replace(/\s+/g, ' ').trim();
+        if (TEAM_VARIANT_TO_KEY[n]) return TEAM_VARIANT_TO_KEY[n];
+        // Try partial match (for e.g. "north melbourne kangaroos")
+        for (const v in TEAM_VARIANT_TO_KEY) {
+            if (n.includes(v)) return TEAM_VARIANT_TO_KEY[v];
+        }
+        return n;
+    }
+
     async function loadData() {
         const [aflRes, aflwRes] = await Promise.all([
             fetch('afl.json'),
@@ -41,40 +83,44 @@
         const aflData = await aflRes.json();
         const aflwData = await aflwRes.json();
 
-        // Build AFL rank map: team name -> {rank, points}
+
+        // Build AFL rank map: canonical key -> {rank, points}
         const aflRankMap = {};
         aflData
             .sort((a, b) => b.points - a.points || b.percentage - a.percentage)
             .forEach((team, idx) => {
-                aflRankMap[team.team] = {
-                    rank: idx + 1,
-                    points: 18 - idx // 1st = 18, 2nd = 17, ...
-                };
-            });
-
-        // Build AFLW rank map: team name -> {rank, points}
-        const aflwRankMap = {};
-        aflwData
-            .sort((a, b) => b.points - a.points || b.percentage - a.percentage)
-            .forEach((team, idx) => {
-                aflwRankMap[team.team] = {
+                const norm = normalizeName(team.team);
+                aflRankMap[norm] = {
                     rank: idx + 1,
                     points: 18 - idx
                 };
             });
 
-        // Get all unique clubs
+        // Build AFLW rank map: canonical key -> {rank, points}
+        const aflwRankMap = {};
+        aflwData
+            .sort((a, b) => b.points - a.points || b.percentage - a.percentage)
+            .forEach((team, idx) => {
+                const norm = normalizeName(team.team);
+                aflwRankMap[norm] = {
+                    rank: idx + 1,
+                    points: 18 - idx
+                };
+            });
+
+        // Get all unique canonical keys
         const allClubs = new Set([
             ...Object.keys(aflRankMap),
             ...Object.keys(aflwRankMap)
         ]);
 
         // Build combined ladder
-        const combined = Array.from(allClubs).map(club => {
-            const afl = aflRankMap[club] || {rank: '-', points: 0};
-            const aflw = aflwRankMap[club] || {rank: '-', points: 0};
+        const combined = Array.from(allClubs).map(key => {
+            const afl = aflRankMap[key] || {rank: '-', points: 0};
+            const aflw = aflwRankMap[key] || {rank: '-', points: 0};
+            const displayClub = TEAM_CANONICAL_MAP[key]?.display || key;
             return {
-                club,
+                club: displayClub,
                 aflRank: afl.rank,
                 aflPoints: afl.points,
                 aflwRank: aflw.rank,
