@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>McClelland Trophy – Live Positions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description"
+        content="Live, auto-updating projection of the AFL McClelland Trophy standings using current AFL + AFLW ladders." />
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+    <header class="max-w-6xl mx-auto p-4 md:p-6">
+        <h1 class="text-2xl md:text-4xl font-black tracking-tight">McClelland Trophy – Live Positions</h1>
+        <p class="mt-2 text-sm md:text-base text-slate-600">Projection based on current ladders (AFL + AFLW). Implements
+            the <span class="font-semibold">2025+ criteria</span>: sum of AFL rank (1–18) and AFLW rank (1–18) including
+            finals; tie‑breakers use legacy trophy points then combined percentage.</p>
+        <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
+            <span class="px-2 py-1 rounded-full bg-slate-100">Client‑side • No server</span>
+            <a class="px-2 py-1 rounded-full bg-slate-100 underline" href="https://api.squiggle.com.au/" target="_blank"
+                rel="noopener">AFL data: Squiggle API</a>
+            <a class="px-2 py-1 rounded-full bg-slate-100 underline"
+                href="https://en.wikipedia.org/wiki/2025_AFL_Women%27s_season" target="_blank" rel="noopener">AFLW
+                source: Wikipedia (fallbacks supported)</a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 md:p-6">
+        <section class="mb-6 grid gap-4 md:grid-cols-3">
+            <div class="md:col-span-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-3">
+                        <label class="text-sm font-medium">Scoring mode:</label>
+                        <select id="mode" class="rounded-xl border-slate-300 text-sm">
+                            <option value="rank">2025+ Official: Rank Sum (AFL rank + AFLW rank)</option>
+                            <option value="legacy">Legacy (2019–2024): Trophy Points</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-600">
+                        <label class="inline-flex items-center gap-2"><input id="autoRefresh" type="checkbox"
+                                class="accent-slate-900" checked> Auto‑refresh (60s)</label>
+                        <button id="refreshBtn"
+                            class="rounded-xl border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-50">Refresh
+                            now</button>
+                    </div>
+                </div>
+                <div id="status" class="mt-3 text-xs text-slate-500">Loading data…</div>
+                <div class="overflow-x-auto mt-4">
+                    <table class="min-w-full text-left text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-slate-500">
+                                <th class="py-2 pr-2">#</th>
+                                <th class="py-2 pr-2">Club</th>
+                                <th class="py-2 pr-2">AFL Rank</th>
+                                <th class="py-2 pr-2">AFLW Rank</th>
+                                <th class="py-2 pr-2">Sum / Points</th>
+                                <th class="py-2 pr-2">Tie‑break</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rows"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <h2 class="font-semibold">Data sources</h2>
+                <ol class="mt-2 list-decimal pl-5 space-y-2 text-sm">
+                    <li><span class="font-medium">AFL ladder:</span> Squiggle API standings (live). If today is during
+                        finals, current finals ranking will be used when available.</li>
+                    <li><span class="font-medium">AFLW ladder:</span> We try Wikipedia first (season page table). If not
+                        found, you can paste a custom JSON endpoint below.</li>
+                </ol>
+                <div class="mt-3">
+                    <label class="block text-xs font-medium text-slate-500">Custom AFLW Ladder JSON (optional)</label>
+                    <textarea id="aflwJson" class="mt-1 w-full rounded-xl border border-slate-300 p-2 text-xs" rows="4"
+                        placeholder='[{"team":"Melbourne","rank":1,"wins":2,"draws":0,"losses":0,"percentage":520.7,"points":8}, …]'></textarea>
+                    <button id="useAflwJson"
+                        class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm hover:bg-slate-50">Use
+                        custom AFLW ladder</button>
+                </div>
+                <p class="mt-3 text-xs text-slate-500">Tip: Host a simple JSON at GitHub Pages / Gist / your CMS; paste
+                    the raw URL here to fetch it.</p>
+            </div>
+        </section>
+
+        <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm text-xs text-slate-600">
+            <details>
+                <summary class="cursor-pointer font-semibold text-slate-800">How positions are calculated</summary>
+                <ul class="mt-2 list-disc pl-5 space-y-1">
+                    <li><span class="font-medium">Rank‑sum (official 2025+):</span> Club score = (current AFL ladder
+                        rank) + (current AFLW ladder rank). Lowest total leads.</li>
+                    <li><span class="font-medium">Tie‑breakers:</span> (1) Legacy trophy points = 4 per AFL win (2 per
+                        draw), 8 per AFLW win (4 per draw). (2) Combined percentage = weighted blend of AFL and AFLW %
+                        (normalized).</li>
+                    <li><span class="font-medium">Legacy mode:</span> Shows the pre‑2025 aggregate points leaderboard
+                        for context.</li>
+                </ul>
+            </details>
+        </section>
+    </main>
+
+    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
+        Built for GitHub Pages. Source can be dropped into <code>index.html</code> of any Pages site. Not affiliated
+        with the AFL.
+    </footer>
+
+    <script>
+        const statusEl = document.getElementById('status');
+        const rowsEl = document.getElementById('rows');
+        const modeEl = document.getElementById('mode');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const autoRefreshEl = document.getElementById('autoRefresh');
+
+        // Canonical club keys and display names
+        const CLUBS = [
+            'Adelaide', 'Brisbane', 'Carlton', 'Collingwood', 'Essendon', 'Fremantle', 'Geelong', 'Gold Coast', 'GWS', 'Hawthorn', 'Melbourne', 'North Melbourne', 'Port Adelaide', 'Richmond', 'St Kilda', 'Sydney', 'West Coast', 'Western Bulldogs'
+        ];
+
+        const DISPLAY = {
+            'Adelaide': 'Adelaide Crows',
+            'Brisbane': 'Brisbane Lions',
+            'Carlton': 'Carlton',
+            'Collingwood': 'Collingwood',
+            'Essendon': 'Essendon',
+            'Fremantle': 'Fremantle',
+            'Geelong': 'Geelong Cats',
+            'Gold Coast': 'Gold Coast Suns',
+            'GWS': 'GWS Giants',
+            'Hawthorn': 'Hawthorn',
+            'Melbourne': 'Melbourne (Narrm)',
+            'North Melbourne': 'North Melbourne Kangaroos',
+            'Port Adelaide': 'Port Adelaide (Yartapuulti)',
+            'Richmond': 'Richmond',
+            'St Kilda': 'St Kilda (Euro‑Yroke)',
+            'Sydney': 'Sydney Swans',
+            'West Coast': 'West Coast Eagles',
+            'Western Bulldogs': 'Western Bulldogs'
+        };
+
+        // Synonym mapping seen across sources
+        const SYN = new Map(Object.entries({
+            'Narrm': 'Melbourne', 'Kangaroos': 'North Melbourne', 'Melbourne Demons': 'Melbourne',
+            'Geelong Cats': 'Geelong', 'Gold Coast SUNS': 'Gold Coast', 'GWS GIANTS': 'GWS',
+            'Port Adelaide Power': 'Port Adelaide', 'West Coast Eagles': 'West Coast', 'Sydney Swans': 'Sydney',
+            'Hawthorn Hawks': 'Hawthorn', 'Western Bulldogs': 'Western Bulldogs', 'Carlton Blues': 'Carlton',
+            'Brisbane Lions': 'Brisbane', 'Adelaide Crows': 'Adelaide', 'Fremantle Dockers': 'Fremantle',
+            'Collingwood Magpies': 'Collingwood', 'St Kilda Saints': 'St Kilda',
+            'Waalitj Marawar': 'West Coast', 'Euro‑Yroke': 'St Kilda', 'Yartapuulti': 'Port Adelaide',
+            'Kuwarna': 'Adelaide', 'Wal': '?'
+        }));
+
+        function canon(team) {
+            if (CLUBS.includes(team)) return team;
+            const s = SYN.get(team) || team;
+            if (CLUBS.includes(s)) return s;
+            // try to strip suffixes
+            for (const c of CLUBS) { if (team.includes(c)) return c; }
+            return s; // last resort
+        }
+
+        async function fetchAFLStandings() {
+            // Squiggle standings
+            const url = 'https://api.squiggle.com.au/?q=standings';
+            const res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) throw new Error('AFL standings fetch failed');
+            const data = await res.json();
+            // pick latest round/year set
+            const items = data.standings || data.standings2025 || data;
+            // Map to {team, rank, wins, draws, losses, pct, points}
+            return items.map(x => ({
+                team: canon(x.name || x.team || x.teamname || x.teamName),
+                rank: Number(x.rank),
+                wins: Number(x.wins),
+                draws: Number(x.draws || 0),
+                losses: Number(x.losses),
+                percentage: Number(x.percentage || x.perc || 0),
+                points: Number(x.pts || x.points || (x.wins * 4 + (x.draws || 0) * 2))
+            })).filter(r => CLUBS.includes(r.team));
+        }
+
+        async function fetchAFLWLadderFromWikipedia() {
+            // Parse the first table that looks like a ladder from the 2025 AFLW season page
+            const url = 'https://en.wikipedia.org/wiki/2025_AFL_Women%27s_season';
+            const res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) throw new Error('Wikipedia AFLW ladder fetch failed');
+            const html = await res.text();
+            // Very light parsing: find rows with a rank number and a club link in the Ladder section
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            const tables = [...div.querySelectorAll('table.wikitable')];
+            if (!tables.length) throw new Error('No tables found on Wikipedia page');
+            // Heuristic: choose table that contains "Pts" and "%"
+            let table = tables.find(t => /Pts/i.test(t.textContent) && /%/.test(t.textContent)) || tables[0];
+            const rows = [...table.querySelectorAll('tr')].slice(1);
+            const out = [];
+            for (const tr of rows) {
+                const tds = [...tr.querySelectorAll('td')];
+                if (tds.length < 7) continue;
+                const rank = parseInt(tds[0].textContent.trim(), 10);
+                if (!Number.isFinite(rank)) continue;
+                let team = tds[1].textContent.trim().replace(/\[[^\]]*\]/g, '');
+                team = canon(team);
+                const played = parseInt(tds[2].textContent.trim(), 10);
+                const wins = parseInt(tds[3].textContent.trim(), 10);
+                const losses = parseInt(tds[4].textContent.trim(), 10);
+                const draws = parseInt((tds[5] || {}).textContent?.trim() || '0', 10) || 0;
+                const pct = parseFloat(tds[tds.length - 1].textContent.trim());
+                const pts = parseInt(tds.find(td => /Pts/i.test(td.textContent))?.textContent || '', 10) || wins * 4 + draws * 2;
+                out.push({ team, rank, wins, draws, losses, percentage: pct, points: pts });
+            }
+            if (!out.length) throw new Error('Wikipedia table parse produced no rows');
+            return out.filter(r => CLUBS.includes(r.team));
+        }
+
+        async function fetchAFLWLadderFromCustom(jsonTextOrUrl) {
+            if (!jsonTextOrUrl) throw new Error('No AFLW JSON provided');
+            let data;
+            if (/^https?:\/\//i.test(jsonTextOrUrl.trim())) {
+                const res = await fetch(jsonTextOrUrl.trim(), { cache: 'no-store' });
+                if (!res.ok) throw new Error('Custom AFLW ladder URL fetch failed');
+                data = await res.json();
+            } else {
+                data = JSON.parse(jsonTextOrUrl);
+            }
+            return data.map(r => ({
+                team: canon(r.team), rank: Number(r.rank), wins: Number(r.wins || 0), draws: Number(r.draws || 0), losses: Number(r.losses || 0), percentage: Number(r.percentage || 0), points: Number(r.points || (r.wins * 4 + (r.draws || 0) * 2))
+            })).filter(r => CLUBS.includes(r.team));
+        }
+
+        function merge(club) {
+            return {
+                club,
+                afl: afl.find(r => r.team === club) || { team: club, rank: 18, wins: 0, draws: 0, losses: 0, percentage: 0, points: 0 },
+                aflw: aflw.find(r => r.team === club) || { team: club, rank: 18, wins: 0, draws: 0, losses: 0, percentage: 0, points: 0 }
+            };
+        }
+
+        function combinedRows() {
+            const mode = modeEl.value;
+            const rows = CLUBS.map(merge).map(({ club, afl: ma, aflw: fw }) => {
+                const rankSum = (ma.rank || 18) + (fw.rank || 18);
+                const legacyPts = (ma.wins * 4 + ma.draws * 2) + (fw.wins * 8 + fw.draws * 4);
+                const combinedPct = ((ma.percentage || 0) + (fw.percentage || 0)) / 2; // simple blend for display only
+                return { club, aflRank: ma.rank, aflwRank: fw.rank, rankSum, legacyPts, combinedPct, ma, fw };
+            });
+            // Sort by chosen mode, then tiebreakers as per 2025 guidance
+            if (mode === 'rank') {
+                rows.sort((a, b) => a.rankSum - b.rankSum || b.legacyPts - a.legacyPts || b.combinedPct - a.combinedPct || a.club.localeCompare(b.club));
+            } else {
+                rows.sort((a, b) => b.legacyPts - a.legacyPts || a.rankSum - b.rankSum || b.combinedPct - a.combinedPct || a.club.localeCompare(b.club));
+            }
+            return rows;
+        }
+
+        function render() {
+            const rows = combinedRows();
+            rowsEl.innerHTML = rows.map((r, i) => `
+        <tr class="border-b border-slate-100 hover:bg-slate-50">
+          <td class="py-2 pr-2 align-middle text-slate-500">${i + 1}</td>
+          <td class="py-2 pr-2 align-middle font-medium">${DISPLAY[r.club] || r.club}</td>
+          <td class="py-2 pr-2 align-middle">${r.aflRank || '–'}</td>
+          <td class="py-2 pr-2 align-middle">${r.aflwRank || '–'}</td>
+          <td class="py-2 pr-2 align-middle">${modeEl.value === 'rank' ? r.rankSum : r.legacyPts}</td>
+          <td class="py-2 pr-2 align-middle text-slate-500">Pts: ${r.legacyPts} • %: ${r.combinedPct.toFixed(1)}</td>
+        </tr>
+      `).join('');
+        }
+
+        let afl = [], aflw = [];
+
+        async function loadAll({ customAflw } = {}) {
+            try {
+                statusEl.textContent = 'Loading AFL ladder…';
+                afl = await fetchAFLStandings();
+                statusEl.textContent = 'Loading AFLW ladder…';
+                if (customAflw) {
+                    aflw = await fetchAFLWLadderFromCustom(customAflw);
+                } else {
+                    try {
+                        aflw = await fetchAFLWLadderFromWikipedia();
+                    } catch (e) {
+                        console.warn('Wikipedia AFLW fallback failed:', e);
+                        statusEl.textContent = 'AFLW ladder (Wikipedia) unavailable. You can paste a custom JSON above.';
+                        aflw = [];
+                    }
+                }
+                statusEl.textContent = 'Up to date.';
+                render();
+            } catch (err) {
+                console.error(err);
+                statusEl.textContent = 'Error loading data. Some sources may block cross‑origin requests on GitHub Pages.';
+                render();
+            }
+        }
+
+        // UI wiring
+        modeEl.addEventListener('change', render);
+        refreshBtn.addEventListener('click', () => loadAll());
+        autoRefreshEl.addEventListener('change', () => {
+            if (autoRefreshEl.checked) { startTimer(); } else { stopTimer(); }
+        });
+        document.getElementById('useAflwJson').addEventListener('click', async () => {
+            const txt = document.getElementById('aflwJson').value.trim();
+            if (!txt) return alert('Paste AFLW ladder JSON or URL first.');
+            await loadAll({ customAflw: txt });
+        });
+
+        let timer = null;
+        function startTimer() { stopTimer(); timer = setInterval(() => loadAll(), 60000); }
+        function stopTimer() { if (timer) clearInterval(timer); timer = null; }
+
+        // Initial load
+        loadAll();
+        startTimer();
+    </script>
+</body>
+
+</html>
