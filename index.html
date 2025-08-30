@@ -62,7 +62,7 @@
             try {
                 const [aflwRes, aflRes] = await Promise.all([
                     fetch('aflw.json'),
-                    fetch('https://api.squiggle.com.au/?q=standings')
+                    fetch('afl.json') // Changed from API to local file
                 ]);
 
                 const aflwData = await aflwRes.json();
@@ -96,7 +96,9 @@
                     pa: parseInt(team.pa, 10)
                 }));
 
-                const aflTeams = aflData.standings.map(team => ({
+                // Use aflData.teams if your local JSON structure matches aflw.json,
+                // or adjust as needed for your local file structure:
+                const aflTeams = aflData.teams.map(team => ({
                     club: team.name,
                     played: team.played,
                     points: team.pts,
