@@ -62,7 +62,7 @@
             try {
                 const [aflwRes, aflRes] = await Promise.all([
                     fetch('aflw.json'),
-                    fetch('afl.json') // Changed from API to local file
+                    fetch('afl.json')
                 ]);
 
                 const aflwData = await aflwRes.json();
@@ -83,31 +83,30 @@
                     "Gold Coast SUNS": "Gold Coast"
                 };
 
-                // Normalise AFLW data
-                const aflwTeams = aflwData.teams.map(team => ({
-                    club: aflNameMap[team.club] || team.club,
+                // Normalise AFLW data (array, not object)
+                const aflwTeams = aflwData.map(team => ({
+                    club: aflNameMap[team.team || team.club] || team.team || team.club,
                     played: parseInt(team.played, 10),
                     points: parseInt(team.points, 10),
                     percentage: parseFloat(team.percentage),
-                    won: parseInt(team.won, 10),
-                    lost: parseInt(team.lost, 10),
-                    drawn: parseInt(team.drawn, 10),
+                    won: parseInt(team.wins ?? team.won, 10),
+                    lost: parseInt(team.losses ?? team.lost, 10),
+                    drawn: parseInt(team.draws ?? team.drawn, 10),
                     pf: parseInt(team.pf, 10),
                     pa: parseInt(team.pa, 10)
                 }));
 
-                // Use aflData.teams if your local JSON structure matches aflw.json,
-                // or adjust as needed for your local file structure:
-                const aflTeams = aflData.teams.map(team => ({
-                    club: team.name,
+                // Normalise AFL data (array, not object)
+                const aflTeams = aflData.map(team => ({
+                    club: team.team || team.name,
                     played: team.played,
-                    points: team.pts,
+                    points: team.points ?? team.pts,
                     percentage: team.percentage,
                     won: team.wins,
-                    lost: team.losses,
-                    drawn: team.draws,
-                    pf: team.for,
-                    pa: team.against
+                    lost: team.lost ?? team.losses,
+                    drawn: team.drawn ?? team.draws,
+                    pf: team.pf ?? team.for,
+                    pa: team.pa ?? team.against
                 }));
 
                 // Merge AFL and AFLW results by club name
