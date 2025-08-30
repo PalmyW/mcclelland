@@ -1,229 +1,178 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>McClelland Trophy – Live Positions</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="description"
-        content="Live, auto-updating projection of the AFL McClelland Trophy standings using current AFL + AFLW ladders." />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>McClelland Trophy Live Ladder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background: #eee;
+        }
+    </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900">
-    <header class="max-w-6xl mx-auto p-4 md:p-6">
-        <h1 class="text-2xl md:text-4xl font-black tracking-tight">McClelland Trophy – Live Positions</h1>
-        <p class="mt-2 text-sm md:text-base text-slate-600">Projection based on current ladders (AFL + AFLW). Implements
-            the <span class="font-semibold">2025+ criteria</span>: sum of AFL rank (1–18) and AFLW rank (1–18) including
-            finals; tie‑breakers use legacy trophy points then combined percentage.</p>
-        <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
-            <span class="px-2 py-1 rounded-full bg-slate-100">Client‑side • No server</span>
-            <a class="px-2 py-1 rounded-full bg-slate-100 underline" href="https://api.squiggle.com.au/" target="_blank"
-                rel="noopener">AFL data: Squiggle API</a>
-            <a class="px-2 py-1 rounded-full bg-slate-100 underline" href="./aflw.json" target="_blank"
-                rel="noopener">AFLW data: Local JSON</a>
-        </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto p-4 md:p-6">
-        <section class="mb-6 grid gap-4 md:grid-cols-3">
-            <div class="md:col-span-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div class="flex items-center gap-3">
-                        <label class="text-sm font-medium">Scoring mode:</label>
-                        <select id="mode" class="rounded-xl border-slate-300 text-sm">
-                            <option value="rank">2025+ Official: Rank Sum (AFL rank + AFLW rank)</option>
-                            <option value="legacy">Legacy (2019–2024): Trophy Points</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-slate-600">
-                        <label class="inline-flex items-center gap-2"><input id="autoRefresh" type="checkbox"
-                                class="accent-slate-900" checked> Auto‑refresh (60s)</label>
-                        <button id="refreshBtn"
-                            class="rounded-xl border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-50">Refresh
-                            now</button>
-                    </div>
-                </div>
-                <div id="status" class="mt-3 text-xs text-slate-500">Loading data…</div>
-                <div class="overflow-x-auto mt-4">
-                    <table class="min-w-full text-left text-sm">
-                        <thead>
-                            <tr class="border-b border-slate-200 text-slate-500">
-                                <th class="py-2 pr-2">#</th>
-                                <th class="py-2 pr-2">Club</th>
-                                <th class="py-2 pr-2">AFL Rank</th>
-                                <th class="py-2 pr-2">AFLW Rank</th>
-                                <th class="py-2 pr-2">Sum / Points</th>
-                                <th class="py-2 pr-2">Tie‑break</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rows"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <h2 class="font-semibold">Data sources</h2>
-                <ol class="mt-2 list-decimal pl-5 space-y-2 text-sm">
-                    <li><span class="font-medium">AFL ladder:</span> Squiggle API standings (live).</li>
-                    <li><span class="font-medium">AFLW ladder:</span> Local <code>aflw.json</code> file included in this
-                        repo.</li>
-                </ol>
-            </div>
-        </section>
-
-        <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm text-xs text-slate-600">
-            <details>
-                <summary class="cursor-pointer font-semibold text-slate-800">How positions are calculated</summary>
-                <ul class="mt-2 list-disc pl-5 space-y-1">
-                    <li><span class="font-medium">Rank‑sum (official 2025+):</span> Club score = (current AFL ladder
-                        rank) + (current AFLW ladder rank). Lowest total leads.</li>
-                    <li><span class="font-medium">Tie‑breakers:</span> (1) Legacy trophy points = 4 per AFL win (2 per
-                        draw), 8 per AFLW win (4 per draw). (2) Combined percentage = weighted blend of AFL and AFLW %
-                        (normalized).</li>
-                    <li><span class="font-medium">Legacy mode:</span> Shows the pre‑2025 aggregate points leaderboard
-                        for context.</li>
-                </ul>
-            </details>
-        </section>
-    </main>
-
-    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
-        Built for GitHub Pages. Source can be dropped into <code>index.html</code> of any Pages site. Not affiliated
-        with the AFL.
-    </footer>
+<body>
+    <h1>McClelland Trophy Live Ladder</h1>
+    <table id="ladder">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Club</th>
+                <th>Played</th>
+                <th>Points</th>
+                <th>%</th>
+                <th>Won</th>
+                <th>Lost</th>
+                <th>Drawn</th>
+                <th>PF</th>
+                <th>PA</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
     <script>
-        const statusEl = document.getElementById('status');
-        const rowsEl = document.getElementById('rows');
-        const modeEl = document.getElementById('mode');
-        const refreshBtn = document.getElementById('refreshBtn');
-        const autoRefreshEl = document.getElementById('autoRefresh');
-
-        const CLUBS = [
-            'Adelaide', 'Brisbane', 'Carlton', 'Collingwood', 'Essendon', 'Fremantle', 'Geelong', 'Gold Coast', 'GWS', 'Hawthorn', 'Melbourne', 'North Melbourne', 'Port Adelaide', 'Richmond', 'St Kilda', 'Sydney', 'West Coast', 'Western Bulldogs'
-        ];
-
-        const DISPLAY = {
-            'Adelaide': 'Adelaide Crows',
-            'Brisbane': 'Brisbane Lions',
-            'Carlton': 'Carlton',
-            'Collingwood': 'Collingwood',
-            'Essendon': 'Essendon',
-            'Fremantle': 'Fremantle',
-            'Geelong': 'Geelong Cats',
-            'Gold Coast': 'Gold Coast Suns',
-            'GWS': 'GWS Giants',
-            'Hawthorn': 'Hawthorn',
-            'Melbourne': 'Melbourne (Narrm)',
-            'North Melbourne': 'North Melbourne Kangaroos',
-            'Port Adelaide': 'Port Adelaide (Yartapuulti)',
-            'Richmond': 'Richmond',
-            'St Kilda': 'St Kilda (Euro‑Yroke)',
-            'Sydney': 'Sydney Swans',
-            'West Coast': 'West Coast Eagles',
-            'Western Bulldogs': 'Western Bulldogs'
-        };
-
-        function canon(team) {
-            if (CLUBS.includes(team)) return team;
-            for (const c of CLUBS) { if (team.includes(c)) return c; }
-            return team;
-        }
-
-        async function fetchAFLStandings() {
-            const url = 'https://api.squiggle.com.au/?q=standings';
-            const res = await fetch(url, { cache: 'no-store' });
-            if (!res.ok) throw new Error('AFL standings fetch failed');
-            const data = await res.json();
-            const items = data.standings || data;
-            return items.map(x => ({
-                team: canon(x.name || x.team),
-                rank: Number(x.rank),
-                wins: Number(x.wins),
-                draws: Number(x.draws || 0),
-                losses: Number(x.losses),
-                percentage: Number(x.percentage || 0),
-                points: Number(x.pts || (x.wins * 4 + (x.draws || 0) * 2))
-            })).filter(r => CLUBS.includes(r.team));
-        }
-
-        async function fetchAFLWLadderFromLocal() {
-            const res = await fetch('./aflw.json', { cache: 'no-store' });
-            if (!res.ok) throw new Error('Local AFLW JSON fetch failed');
-            const data = await res.json();
-            return data.map(r => ({
-                team: canon(r.team), rank: Number(r.rank), wins: Number(r.wins || 0), draws: Number(r.draws || 0), losses: Number(r.losses || 0), percentage: Number(r.percentage || 0), points: Number(r.points || (r.wins * 4 + (r.draws || 0) * 2))
-            })).filter(r => CLUBS.includes(r.team));
-        }
-
-        function merge(club) {
-            return {
-                club,
-                afl: afl.find(r => r.team === club) || { team: club, rank: 18, wins: 0, draws: 0, losses: 0, percentage: 0, points: 0 },
-                aflw: aflw.find(r => r.team === club) || { team: club, rank: 18, wins: 0, draws: 0, losses: 0, percentage: 0, points: 0 }
-            };
-        }
-
-        function combinedRows() {
-            const mode = modeEl.value;
-            const rows = CLUBS.map(merge).map(({ club, afl: ma, aflw: fw }) => {
-                const rankSum = (ma.rank || 18) + (fw.rank || 18);
-                const legacyPts = (ma.wins * 4 + ma.draws * 2) + (fw.wins * 8 + fw.draws * 4);
-                const combinedPct = ((ma.percentage || 0) + (fw.percentage || 0)) / 2;
-                return { club, aflRank: ma.rank, aflwRank: fw.rank, rankSum, legacyPts, combinedPct };
-            });
-            if (mode === 'rank') {
-                rows.sort((a, b) => a.rankSum - b.rankSum || b.legacyPts - a.legacyPts || b.combinedPct - a.combinedPct);
-            } else {
-                rows.sort((a, b) => b.legacyPts - a.legacyPts || a.rankSum - b.rankSum || b.combinedPct - a.combinedPct);
-            }
-            return rows;
-        }
-
-        function render() {
-            const rows = combinedRows();
-            rowsEl.innerHTML = rows.map((r, i) => `
-        <tr class="border-b border-slate-100 hover:bg-slate-50">
-          <td class="py-2 pr-2 align-middle text-slate-500">${i + 1}</td>
-          <td class="py-2 pr-2 align-middle font-medium">${DISPLAY[r.club] || r.club}</td>
-          <td class="py-2 pr-2 align-middle">${r.aflRank || '–'}</td>
-          <td class="py-2 pr-2 align-middle">${r.aflwRank || '–'}</td>
-          <td class="py-2 pr-2 align-middle">${modeEl.value === 'rank' ? r.rankSum : r.legacyPts}</td>
-          <td class="py-2 pr-2 align-middle text-slate-500">Pts: ${r.legacyPts} • %: ${r.combinedPct.toFixed(1)}</td>
-        </tr>
-      `).join('');
-        }
-
-        let afl = [], aflw = [];
-
-        async function loadAll() {
+        async function loadData() {
             try {
-                statusEl.textContent = 'Loading AFL ladder…';
-                afl = await fetchAFLStandings();
-                statusEl.textContent = 'Loading AFLW ladder…';
-                aflw = await fetchAFLWLadderFromLocal();
-                statusEl.textContent = 'Up to date.';
-                render();
+                const [aflwRes, aflRes] = await Promise.all([
+                    fetch('aflw.json'),
+                    fetch('https://api.squiggle.com.au/?q=standings')
+                ]);
+
+                const aflwData = await aflwRes.json();
+                const aflData = await aflRes.json();
+
+                // Mapping table to align AFLW team names with AFL / Squiggle names
+                const aflNameMap = {
+                    "Narrm": "Melbourne",
+                    "Kangaroos": "North Melbourne",
+                    "Kuwarna": "Adelaide",
+                    "Waalitj Marawar": "West Coast",
+                    "Yartapuulti": "Port Adelaide",
+                    "Walyalup": "Fremantle",
+                    "Euro-Yroke": "St Kilda",
+                    "Sydney Swans": "Sydney",
+                    "GWS GIANTS": "Greater Western Sydney",
+                    "Geelong Cats": "Geelong",
+                    "Gold Coast SUNS": "Gold Coast"
+                };
+
+                // Normalise AFLW data
+                const aflwTeams = aflwData.teams.map(team => ({
+                    club: aflNameMap[team.club] || team.club,
+                    played: parseInt(team.played, 10),
+                    points: parseInt(team.points, 10),
+                    percentage: parseFloat(team.percentage),
+                    won: parseInt(team.won, 10),
+                    lost: parseInt(team.lost, 10),
+                    drawn: parseInt(team.drawn, 10),
+                    pf: parseInt(team.pf, 10),
+                    pa: parseInt(team.pa, 10)
+                }));
+
+                const aflTeams = aflData.standings.map(team => ({
+                    club: team.name,
+                    played: team.played,
+                    points: team.pts,
+                    percentage: team.percentage,
+                    won: team.wins,
+                    lost: team.losses,
+                    drawn: team.draws,
+                    pf: team.for,
+                    pa: team.against
+                }));
+
+                // Merge AFL and AFLW results by club name
+                const combined = {};
+
+                for (const t of aflwTeams) {
+                    if (!combined[t.club]) combined[t.club] = { ...t };
+                    else {
+                        combined[t.club].played += t.played;
+                        combined[t.club].points += t.points;
+                        combined[t.club].pf += t.pf;
+                        combined[t.club].pa += t.pa;
+                        combined[t.club].won += t.won;
+                        combined[t.club].lost += t.lost;
+                        combined[t.club].drawn += t.drawn;
+                    }
+                }
+
+                for (const t of aflTeams) {
+                    if (!combined[t.club]) combined[t.club] = { ...t };
+                    else {
+                        combined[t.club].played += t.played;
+                        combined[t.club].points += t.points;
+                        combined[t.club].pf += t.pf;
+                        combined[t.club].pa += t.pa;
+                        combined[t.club].won += t.won;
+                        combined[t.club].lost += t.lost;
+                        combined[t.club].drawn += t.drawn;
+                    }
+                }
+
+                // Recalculate percentages
+                Object.values(combined).forEach(t => {
+                    t.percentage = t.pa > 0 ? (t.pf / t.pa) * 100 : 0;
+                });
+
+                // Sort ladder by points, then percentage
+                const ladder = Object.values(combined).sort((a, b) => {
+                    if (b.points !== a.points) return b.points - a.points;
+                    return b.percentage - a.percentage;
+                });
+
+                const tbody = document.querySelector('#ladder tbody');
+                tbody.innerHTML = '';
+                ladder.forEach((team, idx) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${team.club}</td>
+            <td>${team.played}</td>
+            <td>${team.points}</td>
+            <td>${team.percentage.toFixed(1)}</td>
+            <td>${team.won}</td>
+            <td>${team.lost}</td>
+            <td>${team.drawn}</td>
+            <td>${team.pf}</td>
+            <td>${team.pa}</td>
+          `;
+                    tbody.appendChild(row);
+                });
             } catch (err) {
-                console.error(err);
-                statusEl.textContent = 'Error loading data. Ensure aflw.json is present in repo root.';
-                render();
+                console.error('Error loading ladder:', err);
+                document.querySelector('#ladder tbody').innerHTML = `<tr><td colspan="10">Ladder unavailable</td></tr>`;
             }
         }
 
-        modeEl.addEventListener('change', render);
-        refreshBtn.addEventListener('click', () => loadAll());
-        autoRefreshEl.addEventListener('change', () => {
-            if (autoRefreshEl.checked) { startTimer(); } else { stopTimer(); }
-        });
-
-        let timer = null;
-        function startTimer() { stopTimer(); timer = setInterval(() => loadAll(), 60000); }
-        function stopTimer() { if (timer) clearInterval(timer); timer = null; }
-
-        loadAll();
-        startTimer();
+        loadData();
     </script>
 </body>
 
