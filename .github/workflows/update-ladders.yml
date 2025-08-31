@@ -10,6 +10,7 @@ on:
 # Add permissions for the GITHUB_TOKEN
 permissions:
   contents: write  # Allow writing to repository contents
+  actions: write   # Allow triggering other workflows
 
 jobs:
   update-ladders:
@@ -58,6 +59,24 @@ jobs:
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add public/data/afl.json public/data/aflw.json public/data/last-updated.json
-        git commit -m "Update AFL ladder data - $(date -u '+%Y-%m-%d %H:%M UTC')"
+        git commit -m "Update AFL ladder data - $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
         git push
         echo "✅ Ladder data updated and pushed"
+        
+    - name: Wait before triggering deployment
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        echo "Waiting 30 seconds before triggering deployment..."
+        sleep 30
+        
+    - name: Trigger GitHub Pages deployment
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        curl -L \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy.yml/dispatches \
+          -d '{"ref":"master"}'
+        echo "✅ GitHub Pages deployment triggered"
