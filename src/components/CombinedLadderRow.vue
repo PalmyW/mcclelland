@@ -8,7 +8,7 @@
         <div v-else class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 r flex items-center justify-center text-slate-600 dark:text-slate-300 font-semibold text-xs sm:text-sm">
           {{ index + 1 }}
         </div>
-        <span class="font-semibold text-slate-800 dark:text-slate-200 text-sm sm:text-base">{{ row.club }}</span>
+        <span class="font-semibold text-slate-800 dark:text-slate-200 text-sm sm:text-base whitespace-nowrap">{{ row.club }}</span>
       </div>
     </td>
     <td class="px-4 sm:px-6 py-3 text-center font-medium text-slate-700 dark:text-slate-300">
