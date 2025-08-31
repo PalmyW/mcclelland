@@ -14,11 +14,16 @@
         :get-ghost-parent="getGhostParent"
         class="relative flex flex-col gap-2">
         <Draggable v-for="(team, idx) in teams" :key="team.key">
-          <div :class="itemClass" class="group/item flex items-center gap-4 bg-slate-50/70 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl cursor-grab px-4 py-3 transition-colors">
+          <div :class="itemClass" class="group/item flex items-center gap-3 bg-slate-50/70 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl cursor-grab px-4 py-3 transition-colors">
             <div :class="badgeClass" class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center text-xs sm:text-sm font-semibold ring-1">
               {{ idx+1 }}
             </div>
-            <span :class="textClass" class="flex-1 font-semibold text-slate-800 dark:text-slate-200">
+            <TeamLogo 
+              :team-key="getTeamKey(team)"
+              :team-name="getDisplayName(team)"
+              size="sm"
+            />
+            <span :class="textClass" class="flex-1 font-semibold text-slate-800 dark:text-slate-200 whitespace-nowrap">
               {{ getDisplayName(team) }}
             </span>
             <div class="opacity-60 group-hover/item:opacity-100 transition-opacity">
@@ -36,6 +41,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Container, Draggable } from 'vue3-smooth-dnd';
+import TeamLogo from './TeamLogo.vue'
 
 const props = defineProps({
   title: {
@@ -90,6 +96,23 @@ function getDisplayName(team) {
     if (name) return name
   }
   return team?.team || team?.key || ''
+}
+
+function getTeamKey(team) {
+  // Try to find the canonical key for the team
+  const candidates = [team?.key, team?.team].filter(Boolean)
+  for (const c of candidates) {
+    const lowerC = String(c).toLowerCase()
+    // Check if it's already a canonical key
+    if (props.teamCanonicalMap[lowerC]) return lowerC
+    // Check if it matches any aliases and return the canonical key
+    for (const [key, info] of Object.entries(props.teamCanonicalMap)) {
+      if (info?.aliases?.some(alias => String(alias).toLowerCase() === lowerC)) {
+        return key
+      }
+    }
+  }
+  return team?.key || team?.team || ''
 }
 
 const isBlue = props.variant === 'blue'

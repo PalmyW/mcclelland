@@ -8,6 +8,11 @@
         <div v-else class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 r flex items-center justify-center text-slate-600 dark:text-slate-300 font-semibold text-xs sm:text-sm">
           {{ index + 1 }}
         </div>
+        <TeamLogo 
+          :team-key="getTeamKey(row.club)"
+          :team-name="row.club"
+          size="sm"
+        />
         <span class="font-semibold text-slate-800 dark:text-slate-200 text-sm sm:text-base whitespace-nowrap">{{ row.club }}</span>
       </div>
     </td>
@@ -33,6 +38,29 @@
 
 <script setup>
 import { computed } from 'vue'
+import TeamLogo from './TeamLogo.vue'
+
+// Team canonical map for reverse lookup
+const TEAM_CANONICAL_MAP = {
+  'Adelaide Crows': 'adelaide-crows',
+  'Brisbane Lions': 'brisbane-lions',
+  'Carlton': 'carlton',
+  'Collingwood': 'collingwood',
+  'Essendon': 'essendon',
+  'Fremantle': 'fremantle',
+  'Geelong Cats': 'geelong-cats',
+  'Gold Coast SUNS': 'gold-coast-suns',
+  'GWS GIANTS': 'gws-giants',
+  'Hawthorn': 'hawthorn',
+  'Melbourne': 'melbourne',
+  'North Melbourne': 'north-melbourne',
+  'Port Adelaide': 'port-adelaide',
+  'Richmond': 'richmond',
+  'St Kilda': 'st-kilda',
+  'Sydney Swans': 'sydney-swans',
+  'West Coast Eagles': 'west-coast-eagles',
+  'Western Bulldogs': 'western-bulldogs'
+}
 
 const props = defineProps({
   row: {
@@ -44,6 +72,10 @@ const props = defineProps({
     required: true
   }
 })
+
+function getTeamKey(clubName) {
+  return TEAM_CANONICAL_MAP[clubName] || clubName.toLowerCase().replace(/\s+/g, '-')
+}
 
 const rowClasses = computed(() => [
   'border-b border-slate-100 dark:border-slate-700 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/40',

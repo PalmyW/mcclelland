@@ -6,11 +6,11 @@ import { writeFile } from 'fs/promises';
 
 const SOURCES = [
   {
-    url: 'https://aflapi.afl.com.au/afl/v2/compseasons/73/ladders?roundId=1170',
+    url: 'https://aflapi.afl.com.au/afl/v2/compseasons/73/ladders?roundId=',
     out: './public/data/afl.json',
   },
   {
-    url: 'https://aflapi.afl.com.au/afl/v2/compseasons/84/ladders?roundId=1303',
+    url: 'https://aflapi.afl.com.au/afl/v2/compseasons/84/ladders?roundId=',
     out: './public/data/aflw.json',
   }
 ];
