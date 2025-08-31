@@ -2,7 +2,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import FullReload from 'vite-plugin-full-reload'
 
-const base = process.env.BASE_PATH || '/'
+// Use repo name as base for GitHub Pages. Can override via BASE_PATH env var.
+const base = process.env.BASE_PATH || '/mcclelland/'
 
 // https://vite.dev/config/
 export default defineConfig({

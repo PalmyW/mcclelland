@@ -5,9 +5,9 @@
     <title>SPA Redirect</title>
     <script>
       // Redirect for GitHub Pages SPA
-      // If path contains a subpath, rewrite to base + index.html with a redirect hash
       (function() {
-        var base = '/' + (location.pathname.split('/')[1] || '') + '/';
+        // hardcode base for this repo
+        var base = '/mcclelland/';
         var redirect = base + 'index.html' + (location.search || '') + (location.hash || '');
         location.replace(redirect);
       })();
