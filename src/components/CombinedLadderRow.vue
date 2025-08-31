@@ -11,6 +11,11 @@
         <span class="font-semibold text-slate-800 dark:text-slate-200 text-sm sm:text-base whitespace-nowrap">{{ row.club }}</span>
       </div>
     </td>
+    <td class="px-4 sm:px-6 py-3 text-center">
+      <span class="inline-flex items-center justify-center px-3 sm:px-4 py-1.5 text-slate-800 dark:text-slate-200 font-semibold  text-sm sm:text-base">
+        {{ row.combined }}
+      </span>
+    </td>
     <td class="px-4 sm:px-6 py-3 text-center font-medium text-slate-700 dark:text-slate-300">
       <span class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 font-semibold text-xs sm:text-sm">
         {{ row.aflRank }}
@@ -23,11 +28,6 @@
       </span>
     </td>
     <td class="px-4 sm:px-6 py-3 text-center font-medium text-pink-700 dark:text-pink-300 text-sm sm:text-base">{{ row.aflwPoints }}</td>
-    <td class="px-4 sm:px-6 py-3 text-center">
-      <span class="inline-flex items-center justify-center px-3 sm:px-4 py-1.5 text-slate-800 dark:text-slate-200 font-semibold  text-sm sm:text-base">
-        {{ row.combined }}
-      </span>
-    </td>
   </tr>
 </template>
 

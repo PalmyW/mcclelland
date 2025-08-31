@@ -17,11 +17,11 @@
           <thead>
             <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-600">
               <th class="px-3 sm:px-6 py-2 sm:py-3 text-left font-semibold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">Club</th>
+              <th class="px-3 sm:px-6 py-2 sm:py-3 text-center font-semibold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">Combined</th>
               <th class="px-3 sm:px-6 py-2 sm:py-3 text-center font-semibold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">AFL Rank</th>
               <th class="px-3 sm:px-6 py-2 sm:py-3 text-center font-semibold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">AFL Pts</th>
               <th class="px-3 sm:px-6 py-2 sm:py-3 text-center font-semibold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">AFLW Rank</th>
               <th class="px-3 sm:px-6 py-2 sm:py-3 text-center font-semibold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">AFLW Pts</th>
-              <th class="px-3 sm:px-6 py-2 sm:py-3 text-center font-semibold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">Combined</th>
             </tr>
           </thead>
           <TransitionGroup name="list" tag="tbody">
