@@ -14,22 +14,30 @@
         :get-ghost-parent="getGhostParent"
         class="relative flex flex-col gap-2">
         <Draggable v-for="(team, idx) in teams" :key="team.key">
-          <div :class="itemClass" class="group/item flex items-center gap-3 bg-slate-50/70 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl cursor-grab px-4 py-3 transition-colors">
-            <div :class="badgeClass" class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center text-xs sm:text-sm font-semibold ring-1">
-              {{ idx+1 }}
+          <div :class="itemClass" class="group/item relative flex items-center gap-3 bg-slate-50/70 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl cursor-grab px-4 py-3 transition-colors overflow-hidden">
+            <!-- Background Logo -->
+            <div class="absolute inset-0 opacity-[0.3] dark:opacity-[0.4] pointer-events-none">
+              <div class="absolute right-12 -top-2 w-20 h-20 aspect-square transform rotate-12 scale-150">
+                <TeamLogo 
+                  :team-key="getTeamKey(team)"
+                  :team-name="getDisplayName(team)"
+                  size="xl"
+                  class="w-full h-full object-contain"
+                  :style="{ aspectRatio: '1 / 1' }"
+                />
+              </div>
             </div>
-            <TeamLogo 
-              :team-key="getTeamKey(team)"
-              :team-name="getDisplayName(team)"
-              size="sm"
-            />
-            <span :class="textClass" class="flex-1 font-semibold text-slate-800 dark:text-slate-200 whitespace-nowrap">
-              {{ getDisplayName(team) }}
-            </span>
-            <div class="opacity-60 group-hover/item:opacity-100 transition-opacity">
-              <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2M16 4h2a2 2 0 012 2v2M16 20h2a2 2 0 01-2-2v-2"></path>
-              </svg>
+            <!-- Content -->
+            <div class="relative z-10 flex items-center gap-3 w-full">
+              <div :class="badgeClass" class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center text-xs sm:text-sm font-semibold ring-1">
+                {{ idx+1 }}
+              </div>
+              <span :class="textClass" class="flex-1 font-semibold text-slate-800 dark:text-slate-200 whitespace-nowrap">
+                {{ getDisplayName(team) }}
+              </span>
+              <div class="opacity-60 group-hover/item:opacity-100 transition-opacity flex items-center">
+                <md-icon class="text-slate-400">drag_handle</md-icon>
+              </div>
             </div>
           </div>
         </Draggable>

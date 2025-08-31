@@ -4,6 +4,8 @@
       v-if="logoExists"
       :class="logoClass"
       :title="`${teamName} logo`"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="xMidYMid meet"
     >
       <use :href="logoSrc" />
     </svg>
