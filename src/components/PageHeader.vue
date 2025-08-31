@@ -42,8 +42,13 @@ const isDark = ref(false)
 
 function applyTheme(dark) {
   const root = document.documentElement
-  if (dark) root.classList.add('dark')
-  else root.classList.remove('dark')
+  if (dark) {
+    root.classList.add('dark')
+    document.body.classList.add('dark')
+  } else {
+    root.classList.remove('dark')
+    document.body.classList.remove('dark')
+  }
 }
 
 function toggleTheme() {

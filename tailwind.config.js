@@ -2,7 +2,8 @@ import colors from 'tailwindcss/colors'
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class',
+  // Use class strategy for dark mode and explicitly set the selector
+  darkMode: ['class', '.dark'],
   content: [
     './index.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',

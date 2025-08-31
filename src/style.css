@@ -1,12 +1,9 @@
 @import "tailwindcss";
 
-/* Dark variant handled via a .dark class on html */
+/* No @custom-variant; using Tailwind's class-based dark mode */
 
 @layer base {
-  * {
-    box-sizing: border-box;
-  }
-
+  * { box-sizing: border-box; }
   html, body {
     margin: 0;
     width: 100%;
@@ -15,18 +12,10 @@
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #f8fafc; /* slate-50 */
+    color: #0f172a; /* slate-900 */
   }
-
-  #app {
-    margin: 0;
-    width: 100%;
-    min-height: 100vh;
-    font-family: inherit;
-  }
-
-  body, button, input, textarea, select {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  }
+  #app { min-height: 100vh; font-family: inherit; }
 }
 
 /* Fix dragging offset/selection issues */
