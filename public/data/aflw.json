@@ -1,5 +1,10 @@
 [
   {
+    "team": "Kangaroos",
+    "wins": 3,
+    "key": "kangaroos"
+  },
+  {
     "team": "Narrm",
     "wins": 3,
     "key": "narrm"
@@ -20,14 +25,14 @@
     "key": "hawthorn"
   },
   {
-    "team": "Kangaroos",
-    "wins": 2,
-    "key": "kangaroos"
-  },
-  {
     "team": "Kuwarna",
     "wins": 2,
     "key": "kuwarna"
+  },
+  {
+    "team": "Carlton",
+    "wins": 2,
+    "key": "carlton"
   },
   {
     "team": "Waalitj Marawar",
@@ -38,11 +43,6 @@
     "team": "Brisbane Lions",
     "wins": 1,
     "key": "brisbane-lions"
-  },
-  {
-    "team": "Carlton",
-    "wins": 1,
-    "key": "carlton"
   },
   {
     "team": "Yartapuulti",
@@ -60,14 +60,14 @@
     "key": "western-bulldogs"
   },
   {
-    "team": "Walyalup",
-    "wins": 1,
-    "key": "walyalup"
-  },
-  {
     "team": "Euro-Yroke",
     "wins": 1,
     "key": "euro-yroke"
+  },
+  {
+    "team": "Walyalup",
+    "wins": 1,
+    "key": "walyalup"
   },
   {
     "team": "Richmond",

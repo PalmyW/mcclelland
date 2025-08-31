@@ -36,7 +36,7 @@
                 {{ getDisplayName(team) }}
               </span>
               <div class="opacity-60 group-hover/item:opacity-100 transition-opacity flex items-center">
-                <md-icon class="text-slate-400">drag_handle</md-icon>
+                <span class="material-symbols-outlined text-slate-400 text-xl">drag_handle</span>
               </div>
             </div>
           </div>

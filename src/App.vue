@@ -64,7 +64,6 @@ import ErrorState from './components/ErrorState.vue';
 import LadderCard from './components/LadderCard.vue';
 import CombinedLadder from './components/CombinedLadder.vue';
 import DataSourceStatus from './components/DataSourceStatus.vue';
-import '@material/web/all.js';
 
 const loading = ref(true);
 const error = ref('');
