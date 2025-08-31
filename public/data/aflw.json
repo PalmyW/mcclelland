@@ -1,0 +1,92 @@
+[
+  {
+    "team": "Sydney Swans",
+    "wins": 3,
+    "key": "sydney-swans"
+  },
+  {
+    "team": "Essendon",
+    "wins": 3,
+    "key": "essendon"
+  },
+  {
+    "team": "Hawthorn",
+    "wins": 3,
+    "key": "hawthorn"
+  },
+  {
+    "team": "Narrm",
+    "wins": 2,
+    "key": "narrm"
+  },
+  {
+    "team": "Kangaroos",
+    "wins": 2,
+    "key": "kangaroos"
+  },
+  {
+    "team": "Kuwarna",
+    "wins": 2,
+    "key": "kuwarna"
+  },
+  {
+    "team": "Waalitj Marawar",
+    "wins": 2,
+    "key": "waalitj-marawar"
+  },
+  {
+    "team": "Brisbane Lions",
+    "wins": 1,
+    "key": "brisbane-lions"
+  },
+  {
+    "team": "Carlton",
+    "wins": 1,
+    "key": "carlton"
+  },
+  {
+    "team": "Yartapuulti",
+    "wins": 1,
+    "key": "yartapuulti"
+  },
+  {
+    "team": "Collingwood",
+    "wins": 1,
+    "key": "collingwood"
+  },
+  {
+    "team": "Western Bulldogs",
+    "wins": 1,
+    "key": "western-bulldogs"
+  },
+  {
+    "team": "Walyalup",
+    "wins": 1,
+    "key": "walyalup"
+  },
+  {
+    "team": "Euro-Yroke",
+    "wins": 1,
+    "key": "euro-yroke"
+  },
+  {
+    "team": "Richmond",
+    "wins": 0,
+    "key": "richmond"
+  },
+  {
+    "team": "Geelong Cats",
+    "wins": 0,
+    "key": "geelong-cats"
+  },
+  {
+    "team": "GWS GIANTS",
+    "wins": 0,
+    "key": "gws-giants"
+  },
+  {
+    "team": "Gold Coast SUNS",
+    "wins": 0,
+    "key": "gold-coast-suns"
+  }
+]

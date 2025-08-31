@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SPA Redirect</title>
+    <script>
+      // Redirect for GitHub Pages SPA
+      // If path contains a subpath, rewrite to base + index.html with a redirect hash
+      (function() {
+        var base = '/' + (location.pathname.split('/')[1] || '') + '/';
+        var redirect = base + 'index.html' + (location.search || '') + (location.hash || '');
+        location.replace(redirect);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

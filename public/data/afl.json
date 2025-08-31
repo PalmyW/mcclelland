@@ -1,0 +1,92 @@
+[
+  {
+    "team": "Adelaide Crows",
+    "wins": 18,
+    "key": "adelaide-crows"
+  },
+  {
+    "team": "Geelong Cats",
+    "wins": 17,
+    "key": "geelong-cats"
+  },
+  {
+    "team": "Brisbane Lions",
+    "wins": 16,
+    "key": "brisbane-lions"
+  },
+  {
+    "team": "Collingwood",
+    "wins": 16,
+    "key": "collingwood"
+  },
+  {
+    "team": "GWS GIANTS",
+    "wins": 16,
+    "key": "gws-giants"
+  },
+  {
+    "team": "Fremantle",
+    "wins": 16,
+    "key": "fremantle"
+  },
+  {
+    "team": "Gold Coast SUNS",
+    "wins": 15,
+    "key": "gold-coast-suns"
+  },
+  {
+    "team": "Hawthorn",
+    "wins": 15,
+    "key": "hawthorn"
+  },
+  {
+    "team": "Western Bulldogs",
+    "wins": 14,
+    "key": "western-bulldogs"
+  },
+  {
+    "team": "Sydney Swans",
+    "wins": 12,
+    "key": "sydney-swans"
+  },
+  {
+    "team": "Carlton",
+    "wins": 9,
+    "key": "carlton"
+  },
+  {
+    "team": "St Kilda",
+    "wins": 9,
+    "key": "st-kilda"
+  },
+  {
+    "team": "Port Adelaide",
+    "wins": 9,
+    "key": "port-adelaide"
+  },
+  {
+    "team": "Melbourne",
+    "wins": 7,
+    "key": "melbourne"
+  },
+  {
+    "team": "Essendon",
+    "wins": 6,
+    "key": "essendon"
+  },
+  {
+    "team": "North Melbourne",
+    "wins": 5,
+    "key": "north-melbourne"
+  },
+  {
+    "team": "Richmond",
+    "wins": 5,
+    "key": "richmond"
+  },
+  {
+    "team": "West Coast Eagles",
+    "wins": 1,
+    "key": "west-coast-eagles"
+  }
+]
