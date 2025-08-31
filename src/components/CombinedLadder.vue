@@ -24,14 +24,14 @@
               <th class="px-3 sm:px-6 py-2 sm:py-3 text-center font-semibold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">Combined</th>
             </tr>
           </thead>
-          <tbody>
+          <TransitionGroup name="list" tag="tbody">
             <CombinedLadderRow 
               v-for="(row, index) in combinedData" 
               :key="row.club"
               :row="row"
               :index="index"
             />
-          </tbody>
+          </TransitionGroup>
         </table>
       </div>
     </div>
@@ -52,3 +52,24 @@ defineProps({
   }
 })
 </script>
+
+<style scoped>
+/* TransitionGroup animations for order changes */
+.list-move {
+  transition: transform 200ms ease;
+}
+.list-enter-active, .list-leave-active {
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.list-enter-from, .list-leave-to {
+  opacity: 0;
+  transform: translateY(6px);
+}
+/* Subtle highlight while a row is moving */
+.list-move {
+  background-color: rgba(59, 130, 246, 0.08); /* blue-500 @ ~8% */
+}
+.dark .list-move {
+  background-color: rgba(59, 130, 246, 0.15);
+}
+</style>
