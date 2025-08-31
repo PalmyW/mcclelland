@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 /* No @custom-variant; using Tailwind's class-based dark mode */
 

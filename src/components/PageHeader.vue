@@ -44,10 +44,8 @@ function applyTheme(dark) {
   const root = document.documentElement
   if (dark) {
     root.classList.add('dark')
-    document.body.classList.add('dark')
   } else {
     root.classList.remove('dark')
-    document.body.classList.remove('dark')
   }
 }
 
@@ -55,6 +53,7 @@ function toggleTheme() {
   isDark.value = !isDark.value
   localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
   applyTheme(isDark.value)
+  console.log('Theme toggled to:', isDark.value ? 'dark' : 'light', 'HTML has dark class:', document.documentElement.classList.contains('dark'))
 }
 
 onMounted(() => {
