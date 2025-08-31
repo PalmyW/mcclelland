@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SPA Redirect</title>
+    <script>
+      // Redirect for GitHub Pages SPA under repo base
+      (function() {
+        var base = '/mcclelland/';
+        var redirect = base + 'index.html' + (location.search || '') + (location.hash || '');
+        location.replace(redirect);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
