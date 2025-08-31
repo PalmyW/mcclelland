@@ -1,5 +1,10 @@
 [
   {
+    "team": "Narrm",
+    "wins": 3,
+    "key": "narrm"
+  },
+  {
     "team": "Sydney Swans",
     "wins": 3,
     "key": "sydney-swans"
@@ -13,11 +18,6 @@
     "team": "Hawthorn",
     "wins": 3,
     "key": "hawthorn"
-  },
-  {
-    "team": "Narrm",
-    "wins": 2,
-    "key": "narrm"
   },
   {
     "team": "Kangaroos",
