@@ -1,6 +1,6 @@
 <template>
   <div class="group">
-    <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200/60 dark:border-slate-700/60 p-5 lg:p-6 transition-all duration-200 hover:shadow-xl">
+    <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200/60 dark:border-slate-700/60 px-3 py-5  transition-all duration-200 hover:shadow-xl">
       <div class="flex items-center justify-center mb-4">
         <div :class="headerClass" class="px-4 py-2 rounded-lg font-semibold text-sm sm:text-base tracking-wide ring-1">
           {{ title }}

@@ -2,6 +2,13 @@
   <div class="min-h-screen w-full bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans">
     <PageHeader />
     
+    <!-- Data Source Status -->
+    <DataSourceStatus 
+      :data-source="dataSource" 
+      :is-loading="loading" 
+      @refresh="refreshData" 
+    />
+    
     <LoadingState :loading="loading" message="Loading ladders..." />
     
     <ErrorState v-if="error && !loading" :error="error" />
@@ -56,12 +63,15 @@ import LoadingState from './components/LoadingState.vue';
 import ErrorState from './components/ErrorState.vue';
 import LadderCard from './components/LadderCard.vue';
 import CombinedLadder from './components/CombinedLadder.vue';
+import DataSourceStatus from './components/DataSourceStatus.vue';
 import '@material/web/all.js';
 
 const loading = ref(true);
 const error = ref('');
 const afl = ref([]);
 const aflw = ref([]);
+const dataSource = ref(null);
+const lastUpdated = ref(null);
 
 // Vite base path ("/" in dev, "/mcclelland/" on Pages)
 const BASE = import.meta.env.BASE_URL || '/';
@@ -157,19 +167,175 @@ function getCanonicalKey(nameOrKey) {
   return null;
 }
 
+// AFL API configuration (from scrape-ladders.js)
+const AFL_API_CONFIG = {
+  afl: {
+    // Only attempt API calls in development (where proxy handles CORS)
+    // In production (GitHub Pages), skip API and use cached data directly
+    url: import.meta.env.DEV ? '/api/afl/v2/compseasons/73/ladders?roundId=' : null,
+    fallback: `${BASE}data/afl.json`
+  },
+  aflw: {
+    url: import.meta.env.DEV ? '/api/afl/v2/compseasons/84/ladders?roundId=' : null,
+    fallback: `${BASE}data/aflw.json`
+  }
+};
+
+const AFL_API_HEADERS = {
+  'accept': '*/*',
+  'accept-language': 'en-US,en;q=0.9',
+  'account': 'afl',
+  'cache-control': 'no-cache',
+  'dnt': '1',
+  'origin': 'https://www.afl.com.au',
+  'pragma': 'no-cache',
+  'priority': 'u=1, i',
+  'referer': 'https://www.afl.com.au/',
+  'sec-ch-ua': '"Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"macOS"',
+  'sec-fetch-dest': 'empty',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-site': 'same-site',
+  'sec-gpc': '1',
+  'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'
+};
+
+function canonicalKey(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+// Fetch data from AFL API with fallback to local JSON
+async function fetchLadderData(type) {
+  const config = AFL_API_CONFIG[type];
+  if (!config) throw new Error(`Unknown ladder type: ${type}`);
+  
+  // In production, skip API and go straight to cached data
+  if (!config.url) {
+    console.log(`Using cached ${type.toUpperCase()} data (production mode)`);
+    try {
+      const response = await fetch(config.fallback);
+      if (!response.ok) {
+        throw new Error(`Cached data fetch failed: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(`✓ Loaded ${data.length} ${type.toUpperCase()} teams from cached data`);
+      return { data, source: 'cached' };
+    } catch (error) {
+      console.error(`Failed to load cached ${type} data:`, error.message);
+      throw new Error(`Failed to load ${type} data`);
+    }
+  }
+  
+  try {
+    console.log(`Attempting to fetch ${type.toUpperCase()} data from AFL API...`);
+    
+    // Use proxy in development
+    const response = await fetch(config.url);
+    
+    if (!response.ok) {
+      throw new Error(`AFL API returned ${response.status}`);
+    }
+    
+    const json = await response.json();
+    const entries = json.ladders?.[0]?.entries || [];
+    
+    if (entries.length === 0) {
+      throw new Error('No ladder entries found in AFL API response');
+    }
+    
+    const data = entries.map(entry => ({
+      team: entry.team.name,
+      wins: entry.thisSeasonRecord?.winLossRecord?.wins ?? 0,
+      key: canonicalKey(entry.team.name)
+    }));
+    
+    console.log(`✓ Successfully fetched ${data.length} ${type.toUpperCase()} teams from AFL API`);
+    return { data, source: 'api' };
+    
+  } catch (apiError) {
+    console.warn(`AFL API failed for ${type}:`, apiError.message);
+    console.log(`Falling back to cached data: ${config.fallback}`);
+    
+    try {
+      const response = await fetch(config.fallback);
+      if (!response.ok) {
+        throw new Error(`Cached data fetch failed: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(`✓ Loaded ${data.length} ${type.toUpperCase()} teams from cached fallback`);
+      return { data, source: 'cached' };
+    } catch (fallbackError) {
+      console.error(`Both AFL API and cached fallback failed for ${type}:`, fallbackError.message);
+      throw new Error(`Failed to load ${type} data from both API and cached source`);
+    }
+  }
+}
+
+// Fetch last updated timestamp
+async function fetchLastUpdated() {
+  try {
+    const response = await fetch(`${BASE}data/last-updated.json`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch timestamp: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.lastUpdated;
+  } catch (error) {
+    console.warn('Failed to fetch last updated timestamp:', error.message);
+    return null;
+  }
+}
+
 function fetchLadders() {
   loading.value = true;
+  error.value = '';
+  dataSource.value = null;
+  lastUpdated.value = null;
+  
   Promise.all([
-    fetch(`${BASE}data/afl.json`).then(r => r.json()),
-    fetch(`${BASE}data/aflw.json`).then(r => r.json())
-  ]).then(([aflData, aflwData]) => {
-    afl.value = aflData;
-    aflw.value = aflwData;
+    fetchLadderData('afl'),
+    fetchLadderData('aflw'),
+    fetchLastUpdated()
+  ]).then(([aflResult, aflwResult, lastUpdatedResult]) => {
+    afl.value = aflResult.data;
+    aflw.value = aflwResult.data;
+    lastUpdated.value = lastUpdatedResult;
+    
+    // Determine data source status with timestamp
+    const hasApi = aflResult.source === 'api' || aflwResult.source === 'api';
+    const hasCached = aflResult.source === 'cached' || aflwResult.source === 'cached';
+    
+    if (hasApi && !hasCached) {
+      dataSource.value = {
+        type: 'api',
+        message: 'Live data from AFL API',
+        timestamp: new Date().toISOString()
+      };
+    } else if (hasCached && !hasApi) {
+      dataSource.value = {
+        type: 'cached',
+        message: 'Cached data',
+        timestamp: lastUpdated.value
+      };
+    } else {
+      dataSource.value = {
+        type: 'mixed',
+        message: 'Mixed live and cached data',
+        timestamp: lastUpdated.value
+      };
+    }
+    
     loading.value = false;
   }).catch(e => {
-    error.value = 'Failed to load ladder data.';
+    error.value = `Failed to load ladder data: ${e.message}`;
     loading.value = false;
+    console.error('Ladder loading error:', e);
   });
+}
+
+function refreshData() {
+  fetchLadders();
 }
 
 onMounted(fetchLadders);

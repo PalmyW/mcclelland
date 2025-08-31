@@ -67,4 +67,11 @@ async function fetchLadder({ url, out }) {
       console.error(`Failed to fetch ladder for ${src.out}:`, e.message);
     }
   }
+  
+  // Save timestamp
+  const timestamp = {
+    lastUpdated: new Date().toISOString()
+  };
+  await writeFile('./public/data/last-updated.json', JSON.stringify(timestamp, null, 2));
+  console.log(`✓ Timestamp saved: ${timestamp.lastUpdated}`);
 })();
