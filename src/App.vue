@@ -8,28 +8,43 @@
     
     <!-- Main Content -->
     <div v-if="!loading && !error" class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-      <!-- Ladders Section -->
-      <div class="grid grid-cols-1 py-4 lg:grid-cols-2 gap-6 lg:gap-8 mb-10">
-        <LadderCard
-          title="AFL Ladder"
-          :teams="afl"
-          :team-canonical-map="TEAM_CANONICAL_MAP"
-          group-name="afl"
-          variant="blue"
-          @drop="onDropAFL"
-        />
-        
-        <LadderCard
-          title="AFLW Ladder"
-          :teams="aflw"
-          :team-canonical-map="TEAM_CANONICAL_MAP"
-          group-name="aflw"
-          variant="pink"
-          @drop="onDropAFLW"
-        />
-      </div>
+      <!-- Responsive layout: two columns on lg+ with sticky sidebar -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <!-- Ladders span 2 columns on desktop -->
+        <div class="lg:col-span-2">
+          <div class="grid grid-cols-1 py-4 lg:grid-cols-2 gap-6 lg:gap-8 mb-10">
+            <LadderCard
+              title="AFL Ladder"
+              :teams="afl"
+              :team-canonical-map="TEAM_CANONICAL_MAP"
+              group-name="afl"
+              variant="blue"
+              @drop="onDropAFL"
+            />
             
-      <CombinedLadder :combined-data="combined" />
+            <LadderCard
+              title="AFLW Ladder"
+              :teams="aflw"
+              :team-canonical-map="TEAM_CANONICAL_MAP"
+              group-name="aflw"
+              variant="pink"
+              @drop="onDropAFLW"
+            />
+          </div>
+        </div>
+        
+        <!-- Sidebar: sticky on desktop, hidden header in compact mode -->
+        <aside class="hidden lg:block lg:col-span-1">
+          <div class="sticky top-6">
+            <CombinedLadder :combined-data="combined" compact />
+          </div>
+        </aside>
+      </div>
+
+      <!-- Fallback: show full combined ladder below on mobile/tablet -->
+      <div class="lg:hidden">
+        <CombinedLadder :combined-data="combined" />
+      </div>
     </div>
   </div>
 </template>
