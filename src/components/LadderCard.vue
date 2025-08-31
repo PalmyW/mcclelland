@@ -6,7 +6,13 @@
           {{ title }}
         </div>
       </div>
-      <Container :group-name="groupName" @drop="onDrop" :drag-class="dragClass" :drop-class="dropClass" class="space-y-2">
+      <Container
+        :group-name="groupName"
+        @drop="onDrop"
+        :drag-class="dragClass"
+        :drop-class="dropClass"
+        :get-ghost-parent="getGhostParent"
+        class="relative flex flex-col gap-2">
         <Draggable v-for="(team, idx) in teams" :key="team.key">
           <div :class="itemClass" class="group/item flex items-center gap-4 bg-slate-50/70 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl cursor-grab px-4 py-3 transition-colors">
             <div :class="badgeClass" class="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center text-xs sm:text-sm font-semibold ring-1">
@@ -60,6 +66,9 @@ const emit = defineEmits(['drop'])
 const onDrop = (dropResult) => {
   emit('drop', dropResult)
 }
+
+// Ensure drag ghost is rendered under <body> to avoid offset issues
+const getGhostParent = () => document.body
 
 // Build a quick lookup so any alias or key maps to the canonical display
 const displayIndex = computed(() => {

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+/* Dark variant handled via a .dark class on html */
 
 @layer base {
   * {
@@ -27,6 +27,22 @@
   body, button, input, textarea, select {
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   }
+}
+
+/* Fix dragging offset/selection issues */
+.smooth-dnd-container {
+  position: relative; /* ensure correct offset context */
+}
+.smooth-dnd-ghost {
+  pointer-events: none;
+}
+.smooth-dnd-ghost .smooth-dnd-draggable-wrapper {
+  transform: none !important; /* avoid cumulative transform offset */
+}
+.smooth-dnd-ghost *,
+.smooth-dnd-ghost {
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Material 3 baseline theme (Google default) */
