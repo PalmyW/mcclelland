@@ -48,6 +48,9 @@ const error = ref('');
 const afl = ref([]);
 const aflw = ref([]);
 
+// Vite base path ("/" in dev, "/mcclelland/" on Pages)
+const BASE = import.meta.env.BASE_URL || '/';
+
 // Canonical team map for display and matching (multiple possible names/aliases)
 const TEAM_CANONICAL_MAP = {
   'adelaide-crows': {
@@ -142,8 +145,8 @@ function getCanonicalKey(nameOrKey) {
 function fetchLadders() {
   loading.value = true;
   Promise.all([
-    fetch('/data/afl.json').then(r => r.json()),
-    fetch('/data/aflw.json').then(r => r.json())
+    fetch(`${BASE}data/afl.json`).then(r => r.json()),
+    fetch(`${BASE}data/aflw.json`).then(r => r.json())
   ]).then(([aflData, aflwData]) => {
     afl.value = aflData;
     aflw.value = aflwData;
