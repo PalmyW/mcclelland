@@ -56,9 +56,9 @@ const iconName = computed(() => {
 
 const statusMessage = computed(() => {
   const type = props.dataSource?.type;
-  if (type === 'api') return 'Live AFL data';
-  if (type === 'cached') return 'Cached AFL data';
-  return 'Mixed AFL data';
+  if (type === 'api') return 'Live AFL ladder positions';
+  if (type === 'cached') return 'Cached AFL ladder positions';
+  return 'Mixed AFL ladder positions';
 });
 
 const formattedTimestamp = computed(() => {
