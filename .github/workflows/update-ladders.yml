@@ -2,9 +2,9 @@ name: Update AFL Ladders
 
 on:
   schedule:
-    # Run twice daily during AFL season (9 AM and 9 PM AEST)
-    # This covers post-game updates without excessive runs
-    - cron: '0 11,23 * * *'  # 11 UTC = 9 PM AEST, 23 UTC = 9 AM AEST
+    # Run every 3 hours on Thu-Sun between 1pm-11pm AEST (3-13 UTC)
+    # Thursday to Sunday are main AFL game days
+    - cron: '0 3,6,9,12 * * 4,5,6,0'  # 3,6,9,12 UTC = 1pm,4pm,7pm,10pm AEST on Thu-Sun
   workflow_dispatch: # Allow manual triggers
 
 # Add permissions for the GITHUB_TOKEN
