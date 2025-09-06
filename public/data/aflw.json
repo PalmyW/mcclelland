@@ -5,6 +5,11 @@
     "key": "narrm"
   },
   {
+    "team": "Hawthorn",
+    "wins": 4,
+    "key": "hawthorn"
+  },
+  {
     "team": "Kangaroos",
     "wins": 3,
     "key": "kangaroos"
@@ -23,11 +28,6 @@
     "team": "Carlton",
     "wins": 3,
     "key": "carlton"
-  },
-  {
-    "team": "Hawthorn",
-    "wins": 3,
-    "key": "hawthorn"
   },
   {
     "team": "Kuwarna",
