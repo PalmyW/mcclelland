@@ -20,6 +20,11 @@
     "key": "essendon"
   },
   {
+    "team": "Carlton",
+    "wins": 3,
+    "key": "carlton"
+  },
+  {
     "team": "Hawthorn",
     "wins": 3,
     "key": "hawthorn"
@@ -28,11 +33,6 @@
     "team": "Kuwarna",
     "wins": 2,
     "key": "kuwarna"
-  },
-  {
-    "team": "Carlton",
-    "wins": 2,
-    "key": "carlton"
   },
   {
     "team": "Waalitj Marawar",
