@@ -1,13 +1,13 @@
 [
   {
+    "team": "Narrm",
+    "wins": 4,
+    "key": "narrm"
+  },
+  {
     "team": "Kangaroos",
     "wins": 3,
     "key": "kangaroos"
-  },
-  {
-    "team": "Narrm",
-    "wins": 3,
-    "key": "narrm"
   },
   {
     "team": "Sydney Swans",
@@ -65,14 +65,14 @@
     "key": "euro-yroke"
   },
   {
+    "team": "Gold Coast SUNS",
+    "wins": 1,
+    "key": "gold-coast-suns"
+  },
+  {
     "team": "Walyalup",
     "wins": 1,
     "key": "walyalup"
-  },
-  {
-    "team": "Richmond",
-    "wins": 0,
-    "key": "richmond"
   },
   {
     "team": "Geelong Cats",
@@ -80,13 +80,13 @@
     "key": "geelong-cats"
   },
   {
+    "team": "Richmond",
+    "wins": 0,
+    "key": "richmond"
+  },
+  {
     "team": "GWS GIANTS",
     "wins": 0,
     "key": "gws-giants"
-  },
-  {
-    "team": "Gold Coast SUNS",
-    "wins": 0,
-    "key": "gold-coast-suns"
   }
 ]
