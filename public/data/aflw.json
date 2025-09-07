@@ -25,6 +25,11 @@
     "key": "carlton"
   },
   {
+    "team": "Waalitj Marawar",
+    "wins": 3,
+    "key": "waalitj-marawar"
+  },
+  {
     "team": "Essendon",
     "wins": 3,
     "key": "essendon"
@@ -38,11 +43,6 @@
     "team": "Brisbane Lions",
     "wins": 2,
     "key": "brisbane-lions"
-  },
-  {
-    "team": "Waalitj Marawar",
-    "wins": 2,
-    "key": "waalitj-marawar"
   },
   {
     "team": "Yartapuulti",
