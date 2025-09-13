@@ -10,6 +10,11 @@
     "key": "melbourne"
   },
   {
+    "team": "Carlton",
+    "wins": 4,
+    "key": "carlton"
+  },
+  {
     "team": "Sydney Swans",
     "wins": 4,
     "key": "sydney-swans"
@@ -18,11 +23,6 @@
     "team": "Hawthorn",
     "wins": 4,
     "key": "hawthorn"
-  },
-  {
-    "team": "Carlton",
-    "wins": 3,
-    "key": "carlton"
   },
   {
     "team": "West Coast Eagles",
@@ -45,14 +45,14 @@
     "key": "brisbane-lions"
   },
   {
+    "team": "Port Adelaide",
+    "wins": 2,
+    "key": "port-adelaide"
+  },
+  {
     "team": "Collingwood",
     "wins": 2,
     "key": "collingwood"
-  },
-  {
-    "team": "Port Adelaide",
-    "wins": 1,
-    "key": "port-adelaide"
   },
   {
     "team": "Geelong Cats",
