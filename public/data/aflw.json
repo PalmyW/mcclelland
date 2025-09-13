@@ -45,6 +45,11 @@
     "key": "brisbane-lions"
   },
   {
+    "team": "Collingwood",
+    "wins": 2,
+    "key": "collingwood"
+  },
+  {
     "team": "Port Adelaide",
     "wins": 1,
     "key": "port-adelaide"
@@ -58,11 +63,6 @@
     "team": "Western Bulldogs",
     "wins": 1,
     "key": "western-bulldogs"
-  },
-  {
-    "team": "Collingwood",
-    "wins": 1,
-    "key": "collingwood"
   },
   {
     "team": "St Kilda",
