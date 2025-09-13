@@ -65,6 +65,11 @@
     "key": "western-bulldogs"
   },
   {
+    "team": "GWS GIANTS",
+    "wins": 1,
+    "key": "gws-giants"
+  },
+  {
     "team": "St Kilda",
     "wins": 1,
     "key": "st-kilda"
@@ -83,10 +88,5 @@
     "team": "Richmond",
     "wins": 0,
     "key": "richmond"
-  },
-  {
-    "team": "GWS GIANTS",
-    "wins": 0,
-    "key": "gws-giants"
   }
 ]
