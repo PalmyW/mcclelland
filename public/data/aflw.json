@@ -45,19 +45,24 @@
     "key": "brisbane-lions"
   },
   {
+    "team": "Geelong Cats",
+    "wins": 2,
+    "key": "geelong-cats"
+  },
+  {
     "team": "Port Adelaide",
     "wins": 2,
     "key": "port-adelaide"
   },
   {
+    "team": "St Kilda",
+    "wins": 2,
+    "key": "st-kilda"
+  },
+  {
     "team": "Collingwood",
     "wins": 2,
     "key": "collingwood"
-  },
-  {
-    "team": "Geelong Cats",
-    "wins": 1,
-    "key": "geelong-cats"
   },
   {
     "team": "Western Bulldogs",
@@ -68,11 +73,6 @@
     "team": "GWS GIANTS",
     "wins": 1,
     "key": "gws-giants"
-  },
-  {
-    "team": "St Kilda",
-    "wins": 1,
-    "key": "st-kilda"
   },
   {
     "team": "Gold Coast SUNS",
