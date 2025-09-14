@@ -65,6 +65,11 @@
     "key": "collingwood"
   },
   {
+    "team": "Fremantle",
+    "wins": 2,
+    "key": "fremantle"
+  },
+  {
     "team": "Western Bulldogs",
     "wins": 1,
     "key": "western-bulldogs"
@@ -78,11 +83,6 @@
     "team": "Gold Coast SUNS",
     "wins": 1,
     "key": "gold-coast-suns"
-  },
-  {
-    "team": "Fremantle",
-    "wins": 1,
-    "key": "fremantle"
   },
   {
     "team": "Richmond",
