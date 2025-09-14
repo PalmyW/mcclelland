@@ -1,7 +1,7 @@
 [
   {
     "team": "Kangaroos",
-    "wins": 4,
+    "wins": 5,
     "key": "kangaroos"
   },
   {
@@ -25,6 +25,11 @@
     "key": "hawthorn"
   },
   {
+    "team": "Adelaide Crows",
+    "wins": 3,
+    "key": "adelaide-crows"
+  },
+  {
     "team": "West Coast Eagles",
     "wins": 3,
     "key": "west-coast-eagles"
@@ -33,11 +38,6 @@
     "team": "Essendon",
     "wins": 3,
     "key": "essendon"
-  },
-  {
-    "team": "Adelaide Crows",
-    "wins": 2,
-    "key": "adelaide-crows"
   },
   {
     "team": "Brisbane Lions",
