@@ -1,7 +1,7 @@
 [
   {
     "team": "Kangaroos",
-    "wins": 5,
+    "wins": 6,
     "key": "kangaroos"
   },
   {
@@ -15,14 +15,14 @@
     "key": "melbourne"
   },
   {
-    "team": "Carlton",
-    "wins": 4,
-    "key": "carlton"
-  },
-  {
     "team": "Sydney Swans",
     "wins": 4,
     "key": "sydney-swans"
+  },
+  {
+    "team": "Carlton",
+    "wins": 4,
+    "key": "carlton"
   },
   {
     "team": "Adelaide Crows",
@@ -45,6 +45,11 @@
     "key": "essendon"
   },
   {
+    "team": "Fremantle",
+    "wins": 3,
+    "key": "fremantle"
+  },
+  {
     "team": "Brisbane Lions",
     "wins": 2,
     "key": "brisbane-lions"
@@ -63,11 +68,6 @@
     "team": "Collingwood",
     "wins": 2,
     "key": "collingwood"
-  },
-  {
-    "team": "Fremantle",
-    "wins": 2,
-    "key": "fremantle"
   },
   {
     "team": "Western Bulldogs",
