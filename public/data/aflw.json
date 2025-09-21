@@ -5,14 +5,14 @@
     "key": "kangaroos"
   },
   {
+    "team": "Melbourne",
+    "wins": 5,
+    "key": "melbourne"
+  },
+  {
     "team": "Hawthorn",
     "wins": 5,
     "key": "hawthorn"
-  },
-  {
-    "team": "Melbourne",
-    "wins": 4,
-    "key": "melbourne"
   },
   {
     "team": "Sydney Swans",
@@ -30,14 +30,14 @@
     "key": "adelaide-crows"
   },
   {
-    "team": "West Coast Eagles",
-    "wins": 3,
-    "key": "west-coast-eagles"
-  },
-  {
     "team": "Geelong Cats",
     "wins": 3,
     "key": "geelong-cats"
+  },
+  {
+    "team": "West Coast Eagles",
+    "wins": 3,
+    "key": "west-coast-eagles"
   },
   {
     "team": "Essendon",
@@ -70,14 +70,14 @@
     "key": "collingwood"
   },
   {
+    "team": "GWS GIANTS",
+    "wins": 2,
+    "key": "gws-giants"
+  },
+  {
     "team": "Western Bulldogs",
     "wins": 1,
     "key": "western-bulldogs"
-  },
-  {
-    "team": "GWS GIANTS",
-    "wins": 1,
-    "key": "gws-giants"
   },
   {
     "team": "Gold Coast SUNS",
