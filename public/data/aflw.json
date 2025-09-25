@@ -5,14 +5,14 @@
     "key": "kangaroos"
   },
   {
+    "team": "Hawthorn",
+    "wins": 6,
+    "key": "hawthorn"
+  },
+  {
     "team": "Melbourne",
     "wins": 5,
     "key": "melbourne"
-  },
-  {
-    "team": "Hawthorn",
-    "wins": 5,
-    "key": "hawthorn"
   },
   {
     "team": "Adelaide Crows",
