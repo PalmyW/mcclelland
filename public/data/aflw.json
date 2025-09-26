@@ -60,14 +60,14 @@
     "key": "fremantle"
   },
   {
+    "team": "Western Bulldogs",
+    "wins": 2,
+    "key": "western-bulldogs"
+  },
+  {
     "team": "Port Adelaide",
     "wins": 2,
     "key": "port-adelaide"
-  },
-  {
-    "team": "Collingwood",
-    "wins": 2,
-    "key": "collingwood"
   },
   {
     "team": "GWS GIANTS",
@@ -75,9 +75,9 @@
     "key": "gws-giants"
   },
   {
-    "team": "Western Bulldogs",
-    "wins": 1,
-    "key": "western-bulldogs"
+    "team": "Collingwood",
+    "wins": 2,
+    "key": "collingwood"
   },
   {
     "team": "Gold Coast SUNS",
