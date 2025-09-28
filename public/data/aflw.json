@@ -35,6 +35,11 @@
     "key": "brisbane-lions"
   },
   {
+    "team": "West Coast Eagles",
+    "wins": 4,
+    "key": "west-coast-eagles"
+  },
+  {
     "team": "St Kilda",
     "wins": 4,
     "key": "st-kilda"
@@ -43,11 +48,6 @@
     "team": "Geelong Cats",
     "wins": 3,
     "key": "geelong-cats"
-  },
-  {
-    "team": "West Coast Eagles",
-    "wins": 3,
-    "key": "west-coast-eagles"
   },
   {
     "team": "Essendon",
