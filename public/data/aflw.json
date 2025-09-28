@@ -30,6 +30,11 @@
     "key": "sydney-swans"
   },
   {
+    "team": "St Kilda",
+    "wins": 4,
+    "key": "st-kilda"
+  },
+  {
     "team": "Brisbane Lions",
     "wins": 3,
     "key": "brisbane-lions"
@@ -43,11 +48,6 @@
     "team": "West Coast Eagles",
     "wins": 3,
     "key": "west-coast-eagles"
-  },
-  {
-    "team": "St Kilda",
-    "wins": 3,
-    "key": "st-kilda"
   },
   {
     "team": "Essendon",
