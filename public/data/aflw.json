@@ -1,7 +1,7 @@
 [
   {
     "team": "Kangaroos",
-    "wins": 7,
+    "wins": 8,
     "key": "kangaroos"
   },
   {
@@ -30,11 +30,6 @@
     "key": "st-kilda"
   },
   {
-    "team": "Sydney Swans",
-    "wins": 4,
-    "key": "sydney-swans"
-  },
-  {
     "team": "Brisbane Lions",
     "wins": 4,
     "key": "brisbane-lions"
@@ -43,6 +38,11 @@
     "team": "West Coast Eagles",
     "wins": 4,
     "key": "west-coast-eagles"
+  },
+  {
+    "team": "Sydney Swans",
+    "wins": 4,
+    "key": "sydney-swans"
   },
   {
     "team": "Geelong Cats",
