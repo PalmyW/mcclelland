@@ -25,6 +25,11 @@
     "key": "carlton"
   },
   {
+    "team": "St Kilda",
+    "wins": 5,
+    "key": "st-kilda"
+  },
+  {
     "team": "Sydney Swans",
     "wins": 4,
     "key": "sydney-swans"
@@ -38,11 +43,6 @@
     "team": "West Coast Eagles",
     "wins": 4,
     "key": "west-coast-eagles"
-  },
-  {
-    "team": "St Kilda",
-    "wins": 4,
-    "key": "st-kilda"
   },
   {
     "team": "Geelong Cats",
