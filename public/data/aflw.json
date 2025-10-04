@@ -15,6 +15,11 @@
     "key": "hawthorn"
   },
   {
+    "team": "Brisbane Lions",
+    "wins": 5,
+    "key": "brisbane-lions"
+  },
+  {
     "team": "Adelaide Crows",
     "wins": 5,
     "key": "adelaide-crows"
@@ -28,11 +33,6 @@
     "team": "St Kilda",
     "wins": 5,
     "key": "st-kilda"
-  },
-  {
-    "team": "Brisbane Lions",
-    "wins": 4,
-    "key": "brisbane-lions"
   },
   {
     "team": "West Coast Eagles",
@@ -50,6 +50,11 @@
     "key": "geelong-cats"
   },
   {
+    "team": "Port Adelaide",
+    "wins": 3,
+    "key": "port-adelaide"
+  },
+  {
     "team": "Essendon",
     "wins": 3,
     "key": "essendon"
@@ -63,11 +68,6 @@
     "team": "Western Bulldogs",
     "wins": 2,
     "key": "western-bulldogs"
-  },
-  {
-    "team": "Port Adelaide",
-    "wins": 2,
-    "key": "port-adelaide"
   },
   {
     "team": "GWS GIANTS",
