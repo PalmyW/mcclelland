@@ -15,6 +15,11 @@
     "key": "hawthorn"
   },
   {
+    "team": "Adelaide Crows",
+    "wins": 6,
+    "key": "adelaide-crows"
+  },
+  {
     "team": "Carlton",
     "wins": 6,
     "key": "carlton"
@@ -28,11 +33,6 @@
     "team": "West Coast Eagles",
     "wins": 5,
     "key": "west-coast-eagles"
-  },
-  {
-    "team": "Adelaide Crows",
-    "wins": 5,
-    "key": "adelaide-crows"
   },
   {
     "team": "St Kilda",
