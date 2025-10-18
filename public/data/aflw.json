@@ -15,6 +15,11 @@
     "key": "hawthorn"
   },
   {
+    "team": "St Kilda",
+    "wins": 7,
+    "key": "st-kilda"
+  },
+  {
     "team": "Brisbane Lions",
     "wins": 6,
     "key": "brisbane-lions"
@@ -33,11 +38,6 @@
     "team": "Carlton",
     "wins": 6,
     "key": "carlton"
-  },
-  {
-    "team": "St Kilda",
-    "wins": 6,
-    "key": "st-kilda"
   },
   {
     "team": "Sydney Swans",
