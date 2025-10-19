@@ -50,6 +50,11 @@
     "key": "fremantle"
   },
   {
+    "team": "Western Bulldogs",
+    "wins": 4,
+    "key": "western-bulldogs"
+  },
+  {
     "team": "Port Adelaide",
     "wins": 4,
     "key": "port-adelaide"
@@ -58,11 +63,6 @@
     "team": "Geelong Cats",
     "wins": 4,
     "key": "geelong-cats"
-  },
-  {
-    "team": "Western Bulldogs",
-    "wins": 3,
-    "key": "western-bulldogs"
   },
   {
     "team": "Essendon",
