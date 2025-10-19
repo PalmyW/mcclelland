@@ -15,14 +15,14 @@
     "key": "hawthorn"
   },
   {
+    "team": "Brisbane Lions",
+    "wins": 7,
+    "key": "brisbane-lions"
+  },
+  {
     "team": "St Kilda",
     "wins": 7,
     "key": "st-kilda"
-  },
-  {
-    "team": "Brisbane Lions",
-    "wins": 6,
-    "key": "brisbane-lions"
   },
   {
     "team": "West Coast Eagles",
@@ -75,14 +75,14 @@
     "key": "gws-giants"
   },
   {
+    "team": "Richmond",
+    "wins": 2,
+    "key": "richmond"
+  },
+  {
     "team": "Collingwood",
     "wins": 2,
     "key": "collingwood"
-  },
-  {
-    "team": "Richmond",
-    "wins": 1,
-    "key": "richmond"
   },
   {
     "team": "Gold Coast SUNS",
