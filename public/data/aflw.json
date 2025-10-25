@@ -5,14 +5,14 @@
     "key": "kangaroos"
   },
   {
+    "team": "Hawthorn",
+    "wins": 9,
+    "key": "hawthorn"
+  },
+  {
     "team": "Melbourne",
     "wins": 8,
     "key": "melbourne"
-  },
-  {
-    "team": "Hawthorn",
-    "wins": 8,
-    "key": "hawthorn"
   },
   {
     "team": "Brisbane Lions",
@@ -35,14 +35,14 @@
     "key": "adelaide-crows"
   },
   {
+    "team": "Sydney Swans",
+    "wins": 6,
+    "key": "sydney-swans"
+  },
+  {
     "team": "Carlton",
     "wins": 6,
     "key": "carlton"
-  },
-  {
-    "team": "Sydney Swans",
-    "wins": 5,
-    "key": "sydney-swans"
   },
   {
     "team": "Port Adelaide",
