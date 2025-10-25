@@ -16,7 +16,7 @@
   },
   {
     "team": "Brisbane Lions",
-    "wins": 7,
+    "wins": 8,
     "key": "brisbane-lions"
   },
   {
@@ -45,14 +45,14 @@
     "key": "carlton"
   },
   {
+    "team": "Fremantle",
+    "wins": 6,
+    "key": "fremantle"
+  },
+  {
     "team": "Port Adelaide",
     "wins": 5,
     "key": "port-adelaide"
-  },
-  {
-    "team": "Fremantle",
-    "wins": 5,
-    "key": "fremantle"
   },
   {
     "team": "Western Bulldogs",
