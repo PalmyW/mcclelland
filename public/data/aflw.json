@@ -45,14 +45,14 @@
     "key": "sydney-swans"
   },
   {
+    "team": "Port Adelaide",
+    "wins": 6,
+    "key": "port-adelaide"
+  },
+  {
     "team": "Fremantle",
     "wins": 6,
     "key": "fremantle"
-  },
-  {
-    "team": "Port Adelaide",
-    "wins": 5,
-    "key": "port-adelaide"
   },
   {
     "team": "Geelong Cats",
@@ -75,18 +75,18 @@
     "key": "essendon"
   },
   {
-    "team": "GWS GIANTS",
-    "wins": 2,
-    "key": "gws-giants"
-  },
-  {
     "team": "Richmond",
     "wins": 2,
     "key": "richmond"
   },
   {
+    "team": "GWS GIANTS",
+    "wins": 2,
+    "key": "gws-giants"
+  },
+  {
     "team": "Gold Coast SUNS",
-    "wins": 1,
+    "wins": 2,
     "key": "gold-coast-suns"
   }
 ]
