@@ -10,14 +10,14 @@
     "key": "melbourne"
   },
   {
-    "team": "Brisbane Lions",
-    "wins": 9,
-    "key": "brisbane-lions"
-  },
-  {
     "team": "Hawthorn",
     "wins": 9,
     "key": "hawthorn"
+  },
+  {
+    "team": "Brisbane Lions",
+    "wins": 8,
+    "key": "brisbane-lions"
   },
   {
     "team": "Carlton",
@@ -55,14 +55,14 @@
     "key": "fremantle"
   },
   {
-    "team": "Western Bulldogs",
-    "wins": 5,
-    "key": "western-bulldogs"
-  },
-  {
     "team": "Geelong Cats",
     "wins": 5,
     "key": "geelong-cats"
+  },
+  {
+    "team": "Western Bulldogs",
+    "wins": 4,
+    "key": "western-bulldogs"
   },
   {
     "team": "Essendon",
