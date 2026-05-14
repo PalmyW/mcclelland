@@ -1,8 +1,8 @@
 [
   {
-    "team": "Adelaide Crows",
+    "team": "Kuwarna",
     "wins": 18,
-    "key": "adelaide-crows"
+    "key": "kuwarna"
   },
   {
     "team": "Geelong Cats",
@@ -25,9 +25,9 @@
     "key": "gws-giants"
   },
   {
-    "team": "Fremantle",
+    "team": "Walyalup",
     "wins": 16,
-    "key": "fremantle"
+    "key": "walyalup"
   },
   {
     "team": "Gold Coast SUNS",
@@ -55,19 +55,19 @@
     "key": "carlton"
   },
   {
-    "team": "St Kilda",
+    "team": "Euro-Yroke",
     "wins": 9,
-    "key": "st-kilda"
+    "key": "euro-yroke"
   },
   {
-    "team": "Port Adelaide",
+    "team": "Yartapuulti",
     "wins": 9,
-    "key": "port-adelaide"
+    "key": "yartapuulti"
   },
   {
-    "team": "Melbourne",
+    "team": "Narrm",
     "wins": 7,
-    "key": "melbourne"
+    "key": "narrm"
   },
   {
     "team": "Essendon",
@@ -85,8 +85,8 @@
     "key": "richmond"
   },
   {
-    "team": "West Coast Eagles",
+    "team": "Waalitj Marawar",
     "wins": 1,
-    "key": "west-coast-eagles"
+    "key": "waalitj-marawar"
   }
 ]
