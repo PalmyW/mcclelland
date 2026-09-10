@@ -5,9 +5,9 @@
     "key": "north-melbourne"
   },
   {
-    "team": "Narrm",
+    "team": "Melbourne",
     "wins": 9,
-    "key": "narrm"
+    "key": "melbourne"
   },
   {
     "team": "Brisbane Lions",
@@ -25,19 +25,19 @@
     "key": "carlton"
   },
   {
-    "team": "Kuwarna",
+    "team": "Adelaide Crows",
     "wins": 7,
-    "key": "kuwarna"
+    "key": "adelaide-crows"
   },
   {
-    "team": "Euro-Yroke",
+    "team": "St Kilda",
     "wins": 7,
-    "key": "euro-yroke"
+    "key": "st-kilda"
   },
   {
-    "team": "Waalitj Marawar",
+    "team": "West Coast Eagles",
     "wins": 6,
-    "key": "waalitj-marawar"
+    "key": "west-coast-eagles"
   },
   {
     "team": "Sydney Swans",
@@ -45,14 +45,14 @@
     "key": "sydney-swans"
   },
   {
-    "team": "Yartapuulti",
+    "team": "Port Adelaide",
     "wins": 6,
-    "key": "yartapuulti"
+    "key": "port-adelaide"
   },
   {
-    "team": "Walyalup",
+    "team": "Fremantle",
     "wins": 6,
-    "key": "walyalup"
+    "key": "fremantle"
   },
   {
     "team": "Western Bulldogs",
